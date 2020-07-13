@@ -1,0 +1,3408 @@
+{
+  "instructions": [
+    {
+      "op": "ABS",
+      "op_args": "ABS",
+      "ty": [
+        {
+          "name": "t_instr_ABS",
+          "premises": [],
+          "conclusion": "ctx :- ABS :: int : A => nat : A"
+        }
+      ],
+      "semantics": [
+        {
+          "name": "bs_ABS",
+          "premises": [],
+          "conclusion": "ABS / z : S => abs z : S"
+        }
+      ],
+      "category": "arithmetic",
+      "documentation_short": "Obtain the absolute value of an integer",
+      "documentation": "``ABS`` consumes an integer and pushes its absolute value, with type ``nat``, on the stack.\n",
+      "examples": [
+        {
+          "name": "``ABS`` is the reverse of ``NEG`` on natural numbers",
+          "description": "This examples negates a natural number, takes the absolute\nvalue and asserts that the final value equals the initial\nparameter.\n\nNote that this is true for any natural number, since\nMichelson numbers are arbitrary-precision.\n",
+          "path": "opcodes/abs.tz",
+          "input": "12039123919239192312931",
+          "initial_storage": "Unit",
+          "final_storage": "Unit",
+          "hide_final_storage": true
+        }
+      ]
+    },
+    {
+      "op": "ADD",
+      "op_args": "ADD",
+      "ty": [
+        {
+          "name": "t_instr_ADD__nat_nat",
+          "premises": [],
+          "conclusion": "ctx :- ADD :: nat : nat : A => nat : A"
+        },
+        {
+          "name": "t_instr_ADD__nat_int",
+          "premises": [],
+          "conclusion": "ctx :- ADD :: nat : int : A => int : A"
+        },
+        {
+          "name": "t_instr_ADD__int_nat",
+          "premises": [],
+          "conclusion": "ctx :- ADD :: int : nat : A => int : A"
+        },
+        {
+          "name": "t_instr_ADD__int_int",
+          "premises": [],
+          "conclusion": "ctx :- ADD :: int : int : A => int : A"
+        },
+        {
+          "name": "t_instr_ADD__timestamp_int",
+          "premises": [],
+          "conclusion": "ctx :- ADD :: timestamp : int : A => timestamp : A"
+        },
+        {
+          "name": "t_instr_ADD__int_timestamp",
+          "premises": [],
+          "conclusion": "ctx :- ADD :: int : timestamp : A => timestamp : A"
+        },
+        {
+          "name": "t_instr_ADD__mutez_mutez_mutez",
+          "premises": [],
+          "conclusion": "ctx :- ADD :: mutez : mutez : A => mutez : A"
+        }
+      ],
+      "semantics": [
+        {
+          "name": "bs_ADD",
+          "premises": [],
+          "conclusion": "ADD / z1 : z2 : S => ( z1 + z2 ) : S"
+        }
+      ],
+      "category": "arithmetic",
+      "documentation_short": "Add two numerical values",
+      "documentation": "Adds numerical values.\nThis instruction is polymorphic and accepts any combination of natural numbers and integers as operands.\nThe return value is a natural number if both operands are natural. Otherwise, it is an integer.\n\nFurthermore, integers can be added to timestamps in which case\nthe return value is a timestamp offset with the integer number\nof seconds.\n\nFinally, a ``mutez`` can be added to a ``mutez``, in which case the return value is a ``mutez``.\n",
+      "examples": [
+        {
+          "name": "Various additions",
+          "description": "This example demonstrates the addition of different types of numbers and domain specific types.",
+          "path": "opcodes/add.tz",
+          "input": "Unit",
+          "initial_storage": "Unit",
+          "final_storage": "Unit",
+          "hide_final_storage": true
+        }
+      ]
+    },
+    {
+      "op": "ADDRESS",
+      "op_args": "ADDRESS",
+      "ty": [
+        {
+          "name": "t_instr_ADDRESS",
+          "premises": [],
+          "conclusion": "ctx :- ADDRESS :: contract ty1 : A => address : A"
+        }
+      ],
+      "semantics": [
+        {
+          "name": "bs_ADDRESS",
+          "premises": [],
+          "conclusion": "ADDRESS / s : S => address s : S"
+        }
+      ],
+      "category": "blockchain",
+      "documentation_short": "Push the address of a contract",
+      "documentation": "This instruction consumes a contract value and produces the address of that contract.\n",
+      "examples": [
+        {
+          "name": "Address example",
+          "description": "This example takes a contract by parameter, and then stores its address.",
+          "path": "opcodes/address.tz",
+          "input": "\"tz1b7tUupMgCNw2cCLpKTkSD1NZzB5TkP2sv\"",
+          "initial_storage": "None",
+          "final_storage": "(Some \"tz1b7tUupMgCNw2cCLpKTkSD1NZzB5TkP2sv\")"
+        }
+      ]
+    },
+    {
+      "op": "AMOUNT",
+      "op_args": "AMOUNT",
+      "ty": [
+        {
+          "name": "t_instr_AMOUNT",
+          "premises": [],
+          "conclusion": "ctx :- AMOUNT :: A => mutez : A"
+        }
+      ],
+      "semantics": [
+        {
+          "name": "bs_AMOUNT",
+          "premises": [],
+          "conclusion": "AMOUNT / S => amount : S"
+        }
+      ],
+      "category": "blockchain",
+      "documentation_short": "Push the amount of the current transaction",
+      "documentation": "Push the amount of the current transaction, in ``mutez``.\n",
+      "examples": [
+        {
+          "name": "Store ``AMOUNT``",
+          "description": "This contract stores the amount of its last received transaction.",
+          "path": "opcodes/transfer_amount.tz",
+          "input": "Unit",
+          "initial_storage": "0",
+          "final_storage": "50000",
+          "hide_final_storage": true
+        }
+      ]
+    },
+    {
+      "op": "AND",
+      "op_args": "AND",
+      "ty": [
+        {
+          "name": "t_instr_AND__bool",
+          "premises": [],
+          "conclusion": "ctx :- AND :: bool : bool : A => bool : A"
+        },
+        {
+          "name": "t_instr_AND__nat_nat",
+          "premises": [],
+          "conclusion": "ctx :- AND :: nat : nat : A => nat : A"
+        },
+        {
+          "name": "t_instr_AND__int_nat",
+          "premises": [],
+          "conclusion": "ctx :- AND :: int : nat : A => nat : A"
+        }
+      ],
+      "semantics": [
+        {
+          "name": "bs_AND__1",
+          "premises": [],
+          "conclusion": "AND / True : True : S => True : S"
+        },
+        {
+          "name": "bs_AND__2",
+          "premises": [],
+          "conclusion": "AND / False : x : S => False : S"
+        },
+        {
+          "name": "bs_AND__3",
+          "premises": [],
+          "conclusion": "AND / x : False : S => False : S"
+        },
+        {
+          "name": "bs_AND__bit",
+          "premises": [],
+          "conclusion": "AND / z1 : z2 : S => ( z1 & z2 ) : S"
+        }
+      ],
+      "category": "logic",
+      "documentation_short": "Boolean and bitwise AND",
+      "documentation": "The instruction ``AND`` is defined on boolean and natural number operands.\nIn the former case, the result is the logical AND of the operands.\nIn the latter case, the result is the bitwise AND of the operands.\n\n``AND`` is also defined for integer operands. Negative\nnumbers are considered in `two's complement representation <https://en.wikipedia.org/wiki/Two's_complement>`_,\nstarting with a virtual infinite number of 1s.\n",
+      "examples": [
+        {
+          "name": "Boolean AND",
+          "description": "This contracts takes a pair of booleans, and computes and stores their conjunction.",
+          "path": "opcodes/and_logical_1.tz",
+          "initial_storage": "False",
+          "input": "(Pair True False)",
+          "final_storage": "False"
+        },
+        {
+          "name": "Bitwise AND",
+          "description": "This contract demonstrates bitwise AND on numerical values.",
+          "path": "opcodes/and_binary.tz",
+          "initial_storage": "Unit",
+          "input": "Unit",
+          "final_storage": "Unit",
+          "hide_final_storage": true
+        }
+      ]
+    },
+    {
+      "op": "APPLY",
+      "op_args": "APPLY",
+      "ty": [
+        {
+          "name": "t_instr_APPLY",
+          "premises": [],
+          "conclusion": "ctx :- APPLY :: ty1 : lambda ( pair ty1 ty2 ) ty3 : A => lambda ty2 ty3 : A"
+        }
+      ],
+      "semantics": [
+        {
+          "name": "bs_APPLY",
+          "premises": [],
+          "conclusion": "APPLY / d : { i : ( pair ty1 ty2 ) -> ty3 } : S => { PUSH ty1 d ; PAIR ; i : ty2 -> ty3 } : S"
+        }
+      ],
+      "category": "control_structure",
+      "documentation_short": "Partially apply a tuplified function from the stack",
+      "documentation": "Partially apply a tuplified function from the stack. That is,\nthe ``APPLY`` instruction consumes a value ``d`` of type ``ty1``\nand a value ``i`` of type ``lambda (Pair ty1 ty2) ty3``.\nIt `partially <https://en.wikipedia.org/wiki/Partial_application>`_ applies the lambda to ``d``, hence producing a\nnew lambda of type ``lambda ty2 ty3`` on the stack.\nIntuitively, this amounts to creating a new function that acts\nlike ``i`` but with the first parameter fixed to ``d``.\n\nThe new lambda is storable, and thus values that cannot be\nstored (values of type ``operation``, ``contract _`` and ``big\nmap _ _``) cannot be captured by ``APPLY`` (cannot appear in\n``ty1``).\n"
+    },
+    {
+      "op": "BALANCE",
+      "op_args": "BALANCE",
+      "ty": [
+        {
+          "name": "t_instr_BALANCE",
+          "premises": [],
+          "conclusion": "ctx :- BALANCE :: A => mutez : A"
+        }
+      ],
+      "semantics": [
+        {
+          "name": "bs_BALANCE",
+          "premises": [],
+          "conclusion": "BALANCE / S => balance : S"
+        }
+      ],
+      "category": "blockchain",
+      "documentation_short": "Push the current amount of mutez of the executing contract",
+      "documentation": "Push the current amount of mutez held by the executing contract,\nincluding any mutez added by the calling transaction.\n",
+      "examples": [
+        {
+          "name": "Store ``BALANCE``",
+          "description": "This contract stores its balance after its latest received transaction.",
+          "path": "opcodes/balance.tz",
+          "input": "Unit",
+          "initial_storage": "0",
+          "final_storage": "4000000000000",
+          "hide_final_storage": true
+        }
+      ]
+    },
+    {
+      "op": "BLAKE2B",
+      "op_args": "BLAKE2B",
+      "ty": [
+        {
+          "name": "t_instr_BLAKE2B",
+          "premises": [],
+          "conclusion": "ctx :- BLAKE2B :: bytes : A => bytes : A"
+        }
+      ],
+      "semantics": [
+        {
+          "name": "bs_BLAKE2B",
+          "premises": [],
+          "conclusion": "BLAKE2B / byt : S => hash_blake2b byt : S"
+        }
+      ],
+      "category": "crypto",
+      "documentation_short": "Compute a Blake2B cryptographic hash",
+      "documentation": "Compute the cryptographic hash of the top of the stack using the BLAKE2B cryptographic hash function.\n",
+      "examples": [
+        {
+          "name": "Hash and store",
+          "description": "This example computes the BLAKE2B hash of the string passed as parameter and puts it in storage.",
+          "path": "opcodes/hash_string.tz",
+          "input": "\"foobar\"",
+          "initial_storage": "0x",
+          "final_storage": "0xc5b7e76c15ce98128a840b54c38f462125766d2ed3a6bff0e76f7f3eb415df04"
+        }
+      ]
+    },
+    {
+      "op": "CAR",
+      "op_args": "CAR",
+      "ty": [
+        {
+          "name": "t_instr_CAR",
+          "premises": [],
+          "conclusion": "ctx :- CAR :: pair ty1 ty2 : A => ty1 : A"
+        }
+      ],
+      "semantics": [
+        {
+          "name": "bs_CAR",
+          "premises": [],
+          "conclusion": "CAR / ( Pair d1 d2 ) : S => d1 : S"
+        }
+      ],
+      "category": "data_structure",
+      "documentation_short": "Access the left part of a pair",
+      "examples": [
+        {
+          "name": "Store left parameter",
+          "description": "This contract takes a pair as parameter. It selects the left\npart of the parameter and stores it.\n",
+          "path": "opcodes/car.tz",
+          "input": "(Pair 15 9)",
+          "initial_storage": "0",
+          "final_storage": "15"
+        }
+      ]
+    },
+    {
+      "op": "CDR",
+      "op_args": "CDR",
+      "ty": [
+        {
+          "name": "t_instr_CDR",
+          "premises": [],
+          "conclusion": "ctx :- CDR :: pair ty1 ty2 : A => ty2 : A"
+        }
+      ],
+      "semantics": [
+        {
+          "name": "bs_CDR",
+          "premises": [],
+          "conclusion": "CDR / ( Pair d1 d2 ) : S => d2 : S"
+        }
+      ],
+      "category": "data_structure",
+      "documentation_short": "Access the right part of a pair",
+      "documentation": "``CDR`` destructs the pair on top of the stack and leaves only\nthe right part of it.\n",
+      "examples": [
+        {
+          "name": "Store right part of the parameter",
+          "description": "This contract takes a pair as parameter. It selects the right\npart of the parameter and stores it.\n",
+          "path": "opcodes/cdr.tz",
+          "input": "(Pair 15 9)",
+          "initial_storage": "0",
+          "final_storage": "9"
+        }
+      ]
+    },
+    {
+      "op": "CHAIN_ID",
+      "op_args": "CHAIN_ID",
+      "ty": [
+        {
+          "name": "t_instr_CHAIN_ID",
+          "premises": [],
+          "conclusion": "ctx :- CHAIN_ID :: A => chain_id : A"
+        }
+      ],
+      "semantics": [
+        {
+          "name": "bs_CHAIN_ID",
+          "premises": [],
+          "conclusion": "CHAIN_ID / S => chain_id : S"
+        }
+      ],
+      "category": "blockchain",
+      "documentation_short": "Push the chain identifier",
+      "documentation": "This instruction pushes on the stack the identifier of the chain\non which the smart contract is executed.\n\nThe chain identifier is designed to prevent replay attacks\nbetween the main chain and the test chain forked during amendement\nexploration, where contract addresses and storages are identical.\n\nThe value is derived from the genesis block hash and will thus\nbe different on the main chains of different networks and on the\ntest chains on which the value depends on the first block of the\ntestchain.\n",
+      "examples": [
+        {
+          "name": "Push the chain identifier",
+          "description": "This contract pushes and then stores the chain identifier.\n",
+          "path": "opcodes/chain_id_store.tz",
+          "input": "Unit",
+          "initial_storage": "None",
+          "final_storage": "(Some 0x7a06a770)",
+          "hide_final_storage": true,
+          "final_storage_pre": "In case this example is executed on the main chain of\nmainnet, with the initial storage ``None`` and the\nparameter ``Unit``\nthen the final storage will be ``(Some 0x7a06a770)``.\n"
+        }
+      ]
+    },
+    {
+      "op": "CHECK_SIGNATURE",
+      "op_args": "CHECK_SIGNATURE",
+      "ty": [
+        {
+          "name": "t_instr_CHECK_SIGNATURE",
+          "premises": [],
+          "conclusion": "ctx :- CHECK_SIGNATURE :: key : signature : bytes : A => bool : A"
+        }
+      ],
+      "semantics": [
+        {
+          "name": "bs_CHECK_SIGNATURE",
+          "premises": [],
+          "conclusion": "CHECK_SIGNATURE / addr : sig : byt : S => check_signature addr sig byt : S"
+        }
+      ],
+      "category": "crypto",
+      "documentation_short": "Verify ``signature`` of ``bytes`` by ``key``",
+      "documentation": "Verifies that a byte sequence has been signed with a given key.\nThis instruction consumes three operands: a ``key``, a ``signature`` and a\nbyte sequence. It pushes ``True`` if and only if the signature is a\nvalid signature of the byte sequence by the given key.\n",
+      "examples": [
+        {
+          "name": "Check signature",
+          "description": "This contract stores a ``signature`` and a ``string``.  It\ntakes a ``key`` as parameter and runs successfully if the\nstored ``signature`` is a valid signature of the BLAKE2B\nhash of the stored string by that ``key``.\n",
+          "path": "opcodes/check_signature.tz",
+          "input": "\"edpkuBknW28nW72KG6RoHtYW7p12T6GKc7nAbwYX5m8Wd9sDVC9yav\"",
+          "initial_storage": "(Pair \"edsigu3QszDjUpeqYqbvhyRxMpVFamEnvm9FYnt7YiiNt9nmjYfh8ZTbsybZ5WnBkhA7zfHsRVyuTnRsGLR6fNHt1Up1FxgyRtF\" \"hello\")",
+          "final_storage": "(Pair \"edsigu3QszDjUpeqYqbvhyRxMpVFamEnvm9FYnt7YiiNt9nmjYfh8ZTbsybZ5WnBkhA7zfHsRVyuTnRsGLR6fNHt1Up1FxgyRtF\" \"hello\")"
+        }
+      ]
+    },
+    {
+      "op": "COMPARE",
+      "op_args": "COMPARE",
+      "ty": [
+        {
+          "name": "t_instr_COMPARE",
+          "premises": [],
+          "conclusion": "ctx :- COMPARE :: cty : cty : A => int : A"
+        }
+      ],
+      "semantics": [
+        {
+          "name": "bs_COMPARE__num_lt",
+          "premises": [
+            "z1 < z2"
+          ],
+          "conclusion": "COMPARE / z1 : z2 : S => - 1 : S"
+        },
+        {
+          "name": "bs_COMPARE__num_eq",
+          "premises": [
+            "z1 = z2"
+          ],
+          "conclusion": "COMPARE / z1 : z2 : S => 0 : S"
+        },
+        {
+          "name": "bs_COMPARE__num_gt",
+          "premises": [
+            "z1 > z2"
+          ],
+          "conclusion": "COMPARE / z1 : z2 : S => 1 : S"
+        },
+        {
+          "name": "bs_COMPARE__string_lt",
+          "premises": [
+            "s < t"
+          ],
+          "conclusion": "COMPARE / s : t : S => - 1 : S"
+        },
+        {
+          "name": "bs_COMPARE__string_eq",
+          "premises": [
+            "s = t"
+          ],
+          "conclusion": "COMPARE / s : t : S => 0 : S"
+        },
+        {
+          "name": "bs_COMPARE__string_gt",
+          "premises": [
+            "s > t"
+          ],
+          "conclusion": "COMPARE / s : t : S => 1 : S"
+        }
+      ],
+      "category": "arithmetic",
+      "documentation_short": "Compare two values",
+      "documentation": "Comparison only works on a class of types that we call\ncomparable. The ``COMPARE`` instruction is defined in an ad hoc way\nfor each comparable type, but the result of ``COMPARE`` is\nalways an ``int``, which can in turn be checked in a generic\nmanner using the ``EQ``, ``NEQ``, ``LT``, ``GT``, ``LE`` and\n``GE`` combinators.\n\nThe result of ``COMPARE`` is ``0`` if the top two elements of\nthe stack are equal, negative if the first element in the stack\nis less than the second, and positive otherwise.\n",
+      "examples": [
+        {
+          "name": "A variety of comparisons",
+          "description": "This contract demonstrate several types of comparisons over different values.\n",
+          "path": "opcodes/compare.tz",
+          "input": "Unit",
+          "initial_storage": "Unit",
+          "final_storage": "Unit"
+        }
+      ]
+    },
+    {
+      "op": "CONCAT",
+      "op_args": "CONCAT",
+      "ty": [
+        {
+          "name": "t_instr_CONCAT__string",
+          "premises": [],
+          "conclusion": "ctx :- CONCAT :: string : string : A => string : A"
+        },
+        {
+          "name": "t_instr_CONCAT__string_list",
+          "premises": [],
+          "conclusion": "ctx :- CONCAT :: list string : A => string : A"
+        },
+        {
+          "name": "t_instr_CONCAT__bytes",
+          "premises": [],
+          "conclusion": "ctx :- CONCAT :: bytes : bytes : A => bytes : A"
+        },
+        {
+          "name": "t_instr_CONCAT__bytes_list",
+          "premises": [],
+          "conclusion": "ctx :- CONCAT :: list bytes : A => bytes : A"
+        }
+      ],
+      "semantics": [
+        {
+          "name": "bs_CONCAT__string",
+          "premises": [],
+          "conclusion": "CONCAT / s : t : S => ( s ^ t ) : S"
+        },
+        {
+          "name": "bs_CONCAT__string_list_nil",
+          "premises": [],
+          "conclusion": "CONCAT / {} : S => \\\"\\\" : S"
+        },
+        {
+          "name": "bs_CONCAT__string_list_cons",
+          "premises": [
+            "CONCAT / tl : S => t : S"
+          ],
+          "conclusion": "CONCAT / { s ; < tl > } : S => ( s ^ t ) : S"
+        }
+      ],
+      "category": "data_structure",
+      "documentation_short": "Concatenate a string, byte sequence, string list or byte sequence list",
+      "documentation": "The ``CONCAT`` operator exists in four variants:\n\n - The first version takes two string operands and pushes their concatenation, as a string.\n - The second takes a list of strings and pushes the concatenation of all strings in the list, as a string.\n - The third version takes two byte sequences and pushes their concatenation, as a byte sequence.\n - The fourth version takes a list of byte sequences and pushes the concatenation of all byte sequences in the list, as a byte sequence.\n",
+      "examples": [
+        {
+          "name": "Concatenation of two strings",
+          "description": "This example takes a list of strings as parameter. It prepends ``\"Hello \"`` to each of them and stores the result.",
+          "path": "opcodes/concat_hello.tz",
+          "input": "{ \"John\" ; \"Jane\" }",
+          "initial_storage": "{}",
+          "final_storage": "{ \"Hello John\" ; \"Hello Jane\" }"
+        },
+        {
+          "name": "Concatenation of list of strings",
+          "description": "This example takes a list of strings as parameter and concatenates them, and prepends value in storage and stores the resulting string.",
+          "path": "opcodes/list_concat.tz",
+          "input": "{ \" \" ; \"World\" ; \"!\" }",
+          "initial_storage": "\"Hello\"",
+          "final_storage": "\"Hello World!\""
+        },
+        {
+          "name": "Concatenation of two byte sequences",
+          "description": "This example takes a list of byte sequences as parameter. It prepends ``0xff`` to each of them and stores the result.",
+          "path": "opcodes/concat_hello_bytes.tz",
+          "input": "{ 0xab ; 0xcd }",
+          "initial_storage": "{}",
+          "final_storage": "{ 0xffab ; 0xffcd }"
+        },
+        {
+          "name": "Concatenation of list of byte sequences",
+          "description": "This example takes a list of byte sequences as parameter and concatenates them, and prepends the value in storage and stores the resulting byte sequence.",
+          "path": "opcodes/list_concat_bytes.tz",
+          "input": "{ 0xbe ; 0xef }",
+          "initial_storage": "0xdead",
+          "final_storage": "0xdeadbeef"
+        }
+      ]
+    },
+    {
+      "op": "CONS",
+      "op_args": "CONS",
+      "ty": [
+        {
+          "name": "t_instr_CONS",
+          "premises": [],
+          "conclusion": "ctx :- CONS :: ty1 : list ty1 : A => list ty1 : A"
+        }
+      ],
+      "semantics": [
+        {
+          "name": "bs_CONS",
+          "premises": [],
+          "conclusion": "CONS / d : tl : S => { d ; < tl > } : S"
+        }
+      ],
+      "category": "data_structure",
+      "documentation_short": "Prepend an element to a list",
+      "documentation": "Prepends the element at the top of the stack to the list that is\nthe second element of the stack.\n",
+      "examples": [
+        {
+          "name": "Prepend to storage",
+          "description": "This contracts keeps a list of integers in storage and takes an integer as parameter. It prepends the parameter to the stored list.",
+          "path": "opcodes/cons.tz",
+          "input": "5",
+          "initial_storage": "{ 99 }",
+          "final_storage": "{ 5 ; 99 }"
+        }
+      ]
+    },
+    {
+      "op": "CONTRACT",
+      "op_args": "CONTRACT ty",
+      "ty": [
+        {
+          "name": "t_instr_CONTRACT",
+          "premises": [],
+          "conclusion": "ctx :- CONTRACT ty1 :: address : A => option ( contract ty1 ) : A"
+        }
+      ],
+      "semantics": [
+        {
+          "name": "bs_CONTRACT__ok",
+          "premises": [
+            "get_contract_type addr ty"
+          ],
+          "conclusion": "CONTRACT ty / addr : S => Some ( contract ty addr ) : S"
+        },
+        {
+          "name": "bs_CONTRACT__fail",
+          "premises": [
+            "get_contract_type addr ty1",
+            "ty1 <> ty"
+          ],
+          "conclusion": "CONTRACT ty / addr : S => None : S"
+        }
+      ],
+      "category": "blockchain",
+      "documentation_short": "Cast an address to a typed contract",
+      "documentation": "Casts from an ``address`` to a typed ``contract ty``.  If and\nonly if the address is a valid Tezos contract address with the\ntype ``ty``, then the result ``Some contract`` is pushed.  If\nthe address belongs to an implicit contract, then the type\nparameter ``ty`` must be ``unit``.If any of these conditions are\nnot fulfilled, ``None`` is pushed.\n\nThe ``CONTRACT ty`` instruction has a variant ``CONTRACT %entrypoint t``.\nIt allows the specification of a specific\n`entrypoint <http://tezos.gitlab.io/whitedoc/michelson.html#entrypoints>`_\nof the contract.\nThis works as follows:\n\n::\n\n  +---------------+---------------------+------------------------------------------+\n  | input address | instruction         | output contract                          |\n  +---------------+---------------------+------------------------------------------+\n  | \"addr\"        | CONTRACT t          | (Some \"addr\") if contract exists, has a  |\n  |               |                     | default entrypoint of type t, or has no  |\n  |               |                     | default entrypoint and parameter type t  |\n  +---------------+---------------------+------------------------------------------+\n  | \"addr%name\"   | CONTRACT t          | (Some \"addr%name\") if addr exists and    |\n  +---------------+---------------------+ has an entrypoint %name of type t        |\n  | \"addr\"        | CONTRACT %name t    |                                          |\n  +---------------+---------------------+------------------------------------------+\n  | \"addr%_\"      | CONTRACT %_ t       | None                                     |\n  +---------------+---------------------+------------------------------------------+\n\nNote that ``CONTRACT ty`` is strictly equivalent to ``CONTRACT\n%default ty``, and for clarity, the second variant is forbidden\nin the concrete syntax.\n",
+      "examples": [
+        {
+          "name": "From ``address`` to ``contract``",
+          "description": "This contract receives an ``address`` by parameter, and converts it to a ``contract unit``.\n",
+          "path": "opcodes/contract.tz",
+          "input": "\"tz1b7tUupMgCNw2cCLpKTkSD1NZzB5TkP2sv\"",
+          "initial_storage": "Unit",
+          "final_storage": "Unit"
+        },
+        {
+          "name": "Using ``contract`` with entrypoint annotations",
+          "description": "\nWhen this contract is called by anyone except itself, it\noriginates a new contract with three entrypoints: ``add``,\n``sub`` and ``default`` and saves its address in its\nstorage. It then emits a transaction to itself.\n\nWhen the contract receives a transaction from itself, it\nverifies that the stored ``address`` can be converted to a\n``contract`` for each of the entrypoints ``add``, ``sub`` and\n``default`` with the respective types ``nat``, ``nat`` and\n``unit`` using the ``CONTRACT`` instruction annotated with the\nrespective entrypoint. It verifies that the entrypoint\n``default`` has the type ``unit``, and that this is equivalent\nto to using ``CONTRACT`` with no entrypoint annotation. It\nalso emits transactions to these entrypoints.\n",
+          "path": "mini_scenarios/multiple_entrypoints_counter.tz",
+          "hide_final_storage": true,
+          "input": "Unit",
+          "initial_storage": "None",
+          "final_storage": "Some \"tz1b7tUupMgCNw2cCLpKTkSD1NZzB5TkP2sv\""
+        }
+      ]
+    },
+    {
+      "op": "CREATE_CONTRACT",
+      "op_args": "CREATE_CONTRACT ty1 ty2 code",
+      "ty": [
+        {
+          "name": "t_instr_CREATE_CONTRACT",
+          "premises": [
+            "Some ty2 :- code :: pair ty2 ty1 : [] => pair ( list operation ) ty1 : []"
+          ],
+          "conclusion": "ctx :- CREATE_CONTRACT ty1 ty2 code :: option key_hash : mutez : ty1 : A => operation : address : A"
+        }
+      ],
+      "semantics": [
+        {
+          "name": "bs_CREATE_CONTRACT",
+          "premises": [
+            "create_contract ty1 ty2 code kh z x = ( op , addr )"
+          ],
+          "conclusion": "CREATE_CONTRACT ty1 ty2 code / kh : z : x : S => op : addr : S"
+        }
+      ],
+      "category": "blockchain",
+      "documentation_short": "Push a contract creation operation",
+      "documentation": "Push a contract creation operation (an origination) based on a\nliteral. The operands are the optional delegate, the initial\namount taken from the currently executed contract, and the\ninitial storage of the originated contract.  The contract\n``address`` is also returned as a first class value (to be dropped,\npassed as parameter or stored).\n\nThe ``CONTRACT 'p`` instruction applied to this resulting\naddress will fail until the contract is actually originated,\nthat is, after the generated operation is applied.\nIt follows that a contract cannot directly return a list of\noperations that creates a contract, and call it immediately\nafter.\nHowever, a contract A creating a contract B will get its\naddress, so it can return a list of operations that first originates the\ncontract B, and then calls a contract which in turns calls B: B's address\nbeing either stored in A's storage or passed as parameter, the\nexecutions following B's origination can use ``CONTRACT 'p`` on\nB's address in order to call it.\n",
+      "examples": [
+        {
+          "name": "Originate a dummy contract",
+          "description": "This contract originates a dummy contract.",
+          "path": "opcodes/create_contract.tz",
+          "input": "Unit",
+          "initial_storage": "None",
+          "final_storage": "(Some addr)",
+          "hide_final_storage": true,
+          "final_storage_pre": "The final storage will be ``(Some addr)`` where ``addr`` is\nthe fresh address of the originated contract.\n"
+        },
+        {
+          "name": "Originate and call",
+          "description": "This contract originate a contract and then call\nitself after the application of the origination operation,\nwith the address of the contract, to call it.\n\nThe execution order is thus\n\n- call A with ``None``\n- originate B\n- call A with ``(Some B)``\n- call B with ``\"abcdefg\"``\n",
+          "path": "mini_scenarios/create_contract.tz",
+          "ranges": "16-",
+          "input": "None",
+          "initial_storage": "Unit",
+          "final_storage": "Unit",
+          "hide_final_storage": true
+        }
+      ]
+    },
+    {
+      "op": "DIG",
+      "op_args": "DIG n",
+      "ty": [
+        {
+          "name": "t_instr_DIG",
+          "premises": [
+            "length A = n"
+          ],
+          "conclusion": "ctx :- DIG n :: A @ ( ty1 : B ) => ty1 : ( A @ B )"
+        }
+      ],
+      "semantics": [
+        {
+          "name": "bs_DIG",
+          "premises": [
+            "length S1 = n"
+          ],
+          "conclusion": "DIG n / S1 ++ ( d : S2 ) => d : ( S1 ++ S2 )"
+        }
+      ],
+      "category": "stack",
+      "documentation_short": "Retrieve the ``n``\\ th element of the stack",
+      "documentation": "``DIG n`` consumes a stack that contains at least ``n``\nelements.  It moves the ``n``\\ th element of the stack to the\ntop of the stack. The element on top of the stack\nis the 0th element, so that ``DIG 0`` is a no-op.\nIn other words, ``DIG`` transforms a stack on the form ``x0 : x1 :\n... : xn : ...`` into the stack ``xn : x0 : x1 : ...``.\n\nThe inverse of ``DIG`` is ``DUG``.\n"
+    },
+    {
+      "op": "DIP",
+      "op_args": "DIP n code",
+      "ty": [
+        {
+          "name": "t_instr_DIP",
+          "premises": [
+            "length A = n",
+            "ctx :- code :: B => C"
+          ],
+          "conclusion": "ctx :- DIP n code :: A @ B => A @ C"
+        }
+      ],
+      "semantics": [
+        {
+          "name": "bs_DIP",
+          "premises": [
+            "i1 / S => S'"
+          ],
+          "conclusion": "DIP n i1 / d : S => d : S'"
+        }
+      ],
+      "category": "stack",
+      "documentation_short": "Run code protecting the top of the stack",
+      "documentation": "``DIP n code`` runs ``code`` protecting the ``n`` topmost\nelements of the stack. In particular, ``DIP 0 code`` is\nequivalent to ``code`` and ``DIP 1 code`` is equivalent to ``DIP\ncode``.\n",
+      "examples": [
+        {
+          "description": "This examples takes a pair of integers ``(a, b)`` as parameter,\nand stores ``(a, a + b)``\n",
+          "path": "opcodes/dip.tz",
+          "input": "(Pair 15 9)",
+          "initial_storage": "(Pair 0 0)",
+          "final_storage": "(Pair 15 24)"
+        }
+      ]
+    },
+    {
+      "op": "DROP",
+      "op_args": "DROP n",
+      "ty": [
+        {
+          "name": "t_instr_DROP",
+          "premises": [
+            "length A = n"
+          ],
+          "conclusion": "ctx :- DROP n :: A @ B => B"
+        }
+      ],
+      "semantics": [
+        {
+          "name": "bs_DROP",
+          "premises": [],
+          "conclusion": "DROP n / d : S => S"
+        }
+      ],
+      "category": "stack",
+      "documentation_short": "Drop the top ``n`` elements of the stack",
+      "documentation": "``DROP n`` drops the `n` topmost elements of the stack. In\nparticular, ``DROP 0`` is a noop and ``DROP 1`` is equivalent to\n``DROP``.\n"
+    },
+    {
+      "op": "DUG",
+      "op_args": "DUG n",
+      "ty": [
+        {
+          "name": "t_instr_DUG",
+          "premises": [
+            "length A = n"
+          ],
+          "conclusion": "ctx :- DUG n :: ty1 : ( A @ B ) => A @ ( ty1 : B )"
+        }
+      ],
+      "semantics": [
+        {
+          "name": "bs_DUG",
+          "premises": [
+            "length S1 = n"
+          ],
+          "conclusion": "DUG n / d : ( S1 ++ S2 ) => S1 ++ ( d : S2 )"
+        }
+      ],
+      "category": "stack",
+      "documentation_short": "Insert the top element at depth ``n``",
+      "documentation": "``DUG n`` consumes a stack that contains at least ``n``\nelements.  It removes the top element of the stack, and inserts\nit at the ``n``\\ th level in the stack.  The element on top of\nthe stack is at depth ``0`` so that ``DUG 0`` is a no-op.  In\nother words, ``DUG`` transforms a stack on the form ``x0 : x1 :\n... : xn : ...`` into the stack ``x0 : x1 : ... : x0 : xn :\n...``.\n\nThe inverse of ``DUG`` is ``DIG``.\n"
+    },
+    {
+      "op": "DUP",
+      "op_args": "DUP",
+      "ty": [
+        {
+          "name": "t_instr_DUP",
+          "premises": [],
+          "conclusion": "ctx :- DUP :: ty1 : A => ty1 : ty1 : A"
+        }
+      ],
+      "semantics": [
+        {
+          "name": "bs_DUP",
+          "premises": [],
+          "conclusion": "DUP / d : S => d : d : S"
+        }
+      ],
+      "category": "stack",
+      "documentation_short": "Duplicate the top of the stack"
+    },
+    {
+      "op": "EDIV",
+      "op_args": "EDIV",
+      "ty": [
+        {
+          "name": "t_instr_EDIV__nat_nat",
+          "premises": [],
+          "conclusion": "ctx :- EDIV :: nat : nat : A => option ( pair nat nat ) : A"
+        },
+        {
+          "name": "t_instr_EDIV__nat_int",
+          "premises": [],
+          "conclusion": "ctx :- EDIV :: nat : int : A => option ( pair int nat ) : A"
+        },
+        {
+          "name": "t_instr_EDIV__int_nat",
+          "premises": [],
+          "conclusion": "ctx :- EDIV :: int : nat : A => option ( pair int nat ) : A"
+        },
+        {
+          "name": "t_instr_EDIV__int_int",
+          "premises": [],
+          "conclusion": "ctx :- EDIV :: int : int : A => option ( pair int nat ) : A"
+        },
+        {
+          "name": "t_instr_EDIV__mutez_nat",
+          "premises": [],
+          "conclusion": "ctx :- EDIV :: mutez : nat : A => option ( pair mutez mutez ) : A"
+        },
+        {
+          "name": "t_instr_EDIV__mutez_mutez",
+          "premises": [],
+          "conclusion": "ctx :- EDIV :: mutez : mutez : A => option ( pair nat mutez ) : A"
+        }
+      ],
+      "semantics": [
+        {
+          "name": "bs_EDIV__0",
+          "premises": [],
+          "conclusion": "EDIV / z1 : 0 : S => None : S"
+        },
+        {
+          "name": "bs_EDIV",
+          "premises": [
+            "z2 <> 0"
+          ],
+          "conclusion": "EDIV / z1 : z2 : S => Some ( Pair ( z1 / z2 ) ( z1 % z2 ) ) : S"
+        }
+      ],
+      "category": "arithmetic",
+      "documentation_short": "Euclidean division",
+      "documentation": "Consumes two numbers ``x`` and ``y`` (of either ``int`` or\n``nat``). It returns ``None`` if ``y`` is zero, otherwise, it returns ``Some (Pair\nq r)``, where\n``q = x / y`` and ``r = x mod y``, such that ``q * y + r = x``, and ``0 \u2264 r < y``.\nThat is, the quotient ``q`` is rounded down to the nearest integer and not rounded towards 0.\n\n========    ======  ====================\n ``x``       ``y``   Results\n========    ======  ====================\n ``13``     ``3``   ``Some (Pair 4 1)``\n ``-13``    ``3``   ``Some (Pair -5 2)``\n ``13``     ``-3``  ``Some (Pair -4 1)``\n ``-13``    ``-3``  ``Some (Pair 5 2)``\n ``13``     ``0``   ``None``\n========    ======  ====================\n"
+    },
+    {
+      "op": "EMPTY_BIG_MAP",
+      "op_args": "EMPTY_BIG_MAP kty vty",
+      "ty": [
+        {
+          "name": "t_instr_EMPTY_BIG_MAP",
+          "premises": [],
+          "conclusion": "ctx :- EMPTY_BIG_MAP kty vty :: A => big_map kty vty : A"
+        }
+      ],
+      "semantics": [
+        {
+          "name": "bs_EMPTY_BIG_MAP",
+          "premises": [],
+          "conclusion": "EMPTY_BIG_MAP cty ty / S => {} : S"
+        }
+      ],
+      "category": "data_structure",
+      "documentation_short": "Build a new, empty ``big_map`` from ``kty`` to ``vty``",
+      "documentation": "Build a new, empty map from keys of a given type ``kty`` to values of\nthe other given type ``vty``.\n\nThe ``cty`` type must be comparable. The ``vty`` type cannot be\na ``operation`` or ``big_map``.\n"
+    },
+    {
+      "op": "EMPTY_MAP",
+      "op_args": "EMPTY_MAP kty vty",
+      "ty": [
+        {
+          "name": "t_instr_EMPTY_MAP",
+          "premises": [],
+          "conclusion": "ctx :- EMPTY_MAP kty vty :: A => map kty vty : A"
+        }
+      ],
+      "semantics": [
+        {
+          "name": "bs_EMPTY_MAP",
+          "premises": [],
+          "conclusion": "EMPTY_MAP cty ty / S => {} : S"
+        }
+      ],
+      "category": "data_structure",
+      "documentation_short": "Build a new, empty ``map`` from ``kty`` to ``vty``",
+      "documentation": "Build a new, empty map from keys of a given type ``kty`` to values of\nthe other given type ``vty``.\n\nThe ``cty`` type must be comparable.\n"
+    },
+    {
+      "op": "EMPTY_SET",
+      "op_args": "EMPTY_SET cty",
+      "ty": [
+        {
+          "name": "t_instr_EMPTY_SET",
+          "premises": [],
+          "conclusion": "ctx :- EMPTY_SET cty :: A => set cty : A"
+        }
+      ],
+      "semantics": [
+        {
+          "name": "bs_EMPTY_SET",
+          "premises": [],
+          "conclusion": "EMPTY_SET cty / S => {} : S"
+        }
+      ],
+      "category": "data_structure",
+      "documentation_short": "Build a new, empty set for elements of type ``cty``",
+      "documentation": "Build a new, empty set for elements of a given\ntype ``cty``.\n\nThe ``cty`` type must be comparable.\n"
+    },
+    {
+      "op": "EQ",
+      "op_args": "EQ",
+      "ty": [
+        {
+          "name": "t_instr_EQ",
+          "premises": [],
+          "conclusion": "ctx :- EQ :: int : A => bool : A"
+        }
+      ],
+      "semantics": [
+        {
+          "name": "bs_EQ__tt",
+          "premises": [],
+          "conclusion": "EQ / 0 : S => True : S"
+        },
+        {
+          "name": "bs_EQ__ff",
+          "premises": [
+            "z <> 0"
+          ],
+          "conclusion": "EQ / z : S => False : S"
+        }
+      ],
+      "category": "arithmetic",
+      "documentation_short": "Check that the top of the stack EQuals zero",
+      "documentation": "The ``EQ`` instruction consumes an integer and leaves ``True``\non the stack if it is ``0`` and ``False`` otherwise.\n\nIt is typically composed with ``COMPARE``: the instruction sequence\n``COMPARE; EQ`` leaves ``True`` on the stack if the two top\nstack elements are equal, and ``False`` otherwise.\n"
+    },
+    {
+      "op": "EXEC",
+      "op_args": "EXEC",
+      "ty": [
+        {
+          "name": "t_instr_EXEC",
+          "premises": [],
+          "conclusion": "ctx :- EXEC :: ty1 : lambda ty1 ty2 : A => ty2 : A"
+        }
+      ],
+      "semantics": [
+        {
+          "name": "bs_EXEC",
+          "premises": [
+            "i / d2 : [] => d3 : []"
+          ],
+          "conclusion": "EXEC / { i : ty1 -> ty2 } : d2 : S => d3 : S"
+        }
+      ],
+      "category": "control_structure",
+      "documentation_short": "Execute a function from the stack",
+      "documentation": "The ``EXEC`` instruction consumes a value ``x`` of type ``a``\nand a value ``f`` of type ``lambda a b``, applies the lambda to\n``x`` and leaves the results, of type ``b``,  on the stack.\n"
+    },
+    {
+      "op": "FAILWITH",
+      "op_args": "FAILWITH",
+      "ty": [
+        {
+          "name": "t_instr_FAILWITH",
+          "premises": [],
+          "conclusion": "ctx :- FAILWITH :: ty1 : A => B"
+        }
+      ],
+      "semantics": [
+        {
+          "name": "bs_FAILWITH",
+          "premises": [],
+          "conclusion": "FAILWITH / d : stack => [FAILED]"
+        }
+      ],
+      "category": "control_structure",
+      "documentation_short": "Explicitly abort the current program",
+      "documentation": "This instruction aborts the current program exposing the top element of the stack in its error message. It makes the output useless since all subsequent instructions will simply ignore their usual semantics to propagate the failure up to the main result. Its type is thus completely generic.\n"
+    },
+    {
+      "op": "GE",
+      "op_args": "GE",
+      "ty": [
+        {
+          "name": "t_instr_GE",
+          "premises": [],
+          "conclusion": "ctx :- GE :: int : A => bool : A"
+        }
+      ],
+      "semantics": [
+        {
+          "name": "bs_GE__tt",
+          "premises": [
+            "z >= 0"
+          ],
+          "conclusion": "GE / z : S => True : S"
+        },
+        {
+          "name": "bs_GE__ff",
+          "premises": [
+            "z < 0"
+          ],
+          "conclusion": "GE / z : S => False : S"
+        }
+      ],
+      "category": "arithmetic",
+      "documentation_short": "Check that the top of the stack is Greater Than or Equal to zero",
+      "documentation": "The ``GE`` instruction consumes an integer and leaves ``True``\non the stack if it is greater than or equal to ``0`` and ``False`` otherwise.\n\nIt is typically composed with ``COMPARE``: the instruction sequence\n``COMPARE; GE`` leaves ``True`` on the stack if the first stack\nelement is greater than or equal to the second, and ``False``\notherwise.\n"
+    },
+    {
+      "op": "GET",
+      "op_args": "GET",
+      "ty": [
+        {
+          "name": "t_instr_GET__map",
+          "premises": [],
+          "conclusion": "ctx :- GET :: kty : map kty vty : A => option vty : A"
+        },
+        {
+          "name": "t_instr_GET__big_map",
+          "premises": [],
+          "conclusion": "ctx :- GET :: kty : big_map kty vty : A => option vty : A"
+        }
+      ],
+      "semantics": [
+        {
+          "name": "bs_GET__empty",
+          "premises": [],
+          "conclusion": "GET / x : {} : S => None : S"
+        },
+        {
+          "name": "bs_GET__later",
+          "premises": [
+            "COMPARE / x : k : [] => 1 : []",
+            "GET / x : m : S => opt_y : S"
+          ],
+          "conclusion": "GET / x : { Elt k v ; < m > } : S => opt_y : S"
+        },
+        {
+          "name": "bs_GET__now",
+          "premises": [
+            "COMPARE / x : k : [] => 0 : []"
+          ],
+          "conclusion": "GET / x : { Elt k v ; < m > } : S => Some v : S"
+        },
+        {
+          "name": "bs_GET__nexists",
+          "premises": [
+            "COMPARE / x : k : [] => - 1 : []"
+          ],
+          "conclusion": "GET / x : { Elt k v ; < m > } : S => None : S"
+        }
+      ],
+      "category": "data_structure",
+      "documentation_short": "Access an element in a ``map`` or ``big_map``",
+      "documentation": "The instruction ``GET`` consumes a key and a ``map`` or ``big_map`` and returns an\noptional value: ``None`` if the key is not present in the data structure,\nand ``Some v`` if it is present and mapped to ``v``.\n"
+    },
+    {
+      "op": "GT",
+      "op_args": "GT",
+      "ty": [
+        {
+          "name": "t_instr_GT",
+          "premises": [],
+          "conclusion": "ctx :- GT :: int : A => bool : A"
+        }
+      ],
+      "semantics": [
+        {
+          "name": "bs_GT__tt",
+          "premises": [
+            "z > 0"
+          ],
+          "conclusion": "GT / z : S => True : S"
+        },
+        {
+          "name": "bs_GT__ff",
+          "premises": [
+            "z <= 0"
+          ],
+          "conclusion": "GT / z : S => False : S"
+        }
+      ],
+      "category": "arithmetic",
+      "documentation_short": "Check that the top of the stack is Greater Than zero",
+      "documentation": "The ``GT`` instruction consumes an integer and leaves ``True``\non the stack if it is greater than ``0`` and ``False`` otherwise.\n\nIt is typically composed with ``COMPARE``: the instruction sequence\n``COMPARE; GT`` leaves ``True`` on the stack if the first stack\nelement is greater than the second, and ``False`` otherwise.\n"
+    },
+    {
+      "op": "HASH_KEY",
+      "op_args": "HASH_KEY",
+      "ty": [
+        {
+          "name": "t_instr_HASH_KEY",
+          "premises": [],
+          "conclusion": "ctx :- HASH_KEY :: key : A => key_hash : A"
+        }
+      ],
+      "semantics": [
+        {
+          "name": "bs_HASH_KEY",
+          "premises": [],
+          "conclusion": "HASH_KEY / s : S => hash_key s : S"
+        }
+      ],
+      "category": "crypto",
+      "documentation_short": "Compute the Base58Check of a public key",
+      "documentation": "The ``HASH_KEY`` instruction computes the\n`Base58Check <https://en.bitcoin.it/wiki/Base58Check>`_ of a public\nkey.\n"
+    },
+    {
+      "op": "IF",
+      "op_args": "IF code1 code2",
+      "ty": [
+        {
+          "name": "t_instr_IF",
+          "premises": [
+            "ctx :- code1 :: A => B",
+            "ctx :- code2 :: A => B"
+          ],
+          "conclusion": "ctx :- IF code1 code2 :: bool : A => B"
+        }
+      ],
+      "semantics": [
+        {
+          "name": "bs_IF__tt",
+          "premises": [
+            "i1 / S => S'"
+          ],
+          "conclusion": "IF i1 i2 / True : S => S'"
+        },
+        {
+          "name": "bs_IF__ff",
+          "premises": [
+            "i2 / S => S'"
+          ],
+          "conclusion": "IF i1 i2 / False : S => S'"
+        }
+      ],
+      "category": "control_structure",
+      "documentation_short": "Conditional branching",
+      "documentation": "The ``IF bt bf`` instruction consumes a stack whose top element\n``b`` is of type ``bool`` and an arbitrary remaining stack\n``S``.\n\nThis instruction executes the ``bt`` branch if ``b`` is\n``True``, and the ``bf`` branch otherwise.\n\nNote that both branches must return a stack of the same type.\n"
+    },
+    {
+      "op": "IF_CONS",
+      "op_args": "IF_CONS code1 code2",
+      "ty": [
+        {
+          "name": "t_instr_IF_CONS",
+          "premises": [
+            "ctx :- code1 :: ty1 : list ty1 : A => B",
+            "ctx :- code2 :: A => B"
+          ],
+          "conclusion": "ctx :- IF_CONS code1 code2 :: list ty1 : A => B"
+        }
+      ],
+      "semantics": [
+        {
+          "name": "bs_IF_CONS__nil",
+          "premises": [
+            "body2 / S => S'"
+          ],
+          "conclusion": "IF_CONS body1 body2 / {} : S => S'"
+        },
+        {
+          "name": "bs_IF_CONS__cons",
+          "premises": [
+            "body1 / d : tl : S => S'"
+          ],
+          "conclusion": "IF_CONS body1 body2 / { d ; < tl > } : S => S'"
+        }
+      ],
+      "category": "control_structure",
+      "documentation_short": "Inspect a list",
+      "documentation": "The ``IF_CONS bt bf`` instruction consumes a stack whose top\nelement ``l`` has a list type ``list ty1`` and an arbitrary\nremaining stack ``S``.\n\nIf the list ``l`` has at least one element ``hd`` followed by (a\npossibly empty) list ``tl``, then the ``bt`` branch is executed\non the stack ``hd : tl : S``.  Otherwise, the ``bf`` branch is\nexecuted on the stack ``S``.\n\nNote that both branches must return a stack of the same type.\n"
+    },
+    {
+      "op": "IF_LEFT",
+      "op_args": "IF_LEFT code1 code2",
+      "ty": [
+        {
+          "name": "t_instr_IF_LEFT",
+          "premises": [
+            "ctx :- code1 :: ty1 : A => B",
+            "ctx :- code2 :: ty2 : A => B"
+          ],
+          "conclusion": "ctx :- IF_LEFT code1 code2 :: or ty1 ty2 : A => B"
+        }
+      ],
+      "semantics": [
+        {
+          "name": "bs_IF_LEFT__left",
+          "premises": [
+            "body1 / d : S => S'"
+          ],
+          "conclusion": "IF_LEFT body1 body2 / ( Left d ) : S => S'"
+        },
+        {
+          "name": "bs_IF_LEFT__right",
+          "premises": [
+            "body2 / d : S => S'"
+          ],
+          "conclusion": "IF_LEFT body1 body2 / ( Right d ) : S => S'"
+        }
+      ],
+      "category": "control_structure",
+      "documentation_short": "Inspect a value of a union",
+      "documentation": "The ``IF_LEFT bt bf`` instruction consumes a stack whose top\nelement ``v`` has an union type ``or ty1 ty2`` and an arbitrary\nremaining stack ``S``.\n\nIf the union ``v`` stack is ``Left x``, then the ``bt`` branch\nis executed on the stack ``x : S``.  If it is ``Right y``,\nthen the ``bf`` branch is executed on the stack ``y : S``.\n\nNote that both branches must return a stack of the same type.\n"
+    },
+    {
+      "op": "IF_NONE",
+      "op_args": "IF_NONE code1 code2",
+      "ty": [
+        {
+          "name": "t_instr_IF_NONE",
+          "premises": [
+            "ctx :- code1 :: A => B",
+            "ctx :- code2 :: ty1 : A => B"
+          ],
+          "conclusion": "ctx :- IF_NONE code1 code2 :: option ty1 : A => B"
+        }
+      ],
+      "semantics": [
+        {
+          "name": "bs_IF_NONE__none",
+          "premises": [
+            "body1 / S => S'"
+          ],
+          "conclusion": "IF_NONE body1 body2 / None : S => S'"
+        },
+        {
+          "name": "bs_IF_NONE__some",
+          "premises": [
+            "body2 / d : S => S'"
+          ],
+          "conclusion": "IF_NONE body1 body2 / ( Some d ) : S => S'"
+        }
+      ],
+      "category": "control_structure",
+      "documentation_short": "Inspect an optional value",
+      "documentation": "The ``IF_NONE bt bf`` instruction consumes a stack whose top\nelement ``v`` has an option type ``option ty1`` and an arbitrary\nremaining stack ``S``.\n\nIf the optional value ``v`` is ``None``, then the ``bt``\nbranch is executed on the stack ``S``.  If ``v`` is\n``Some x``, then the ``bf`` branch is executed on the stack\n``x : S``.\n\nNote that both branches must return a stack of the same type.\n"
+    },
+    {
+      "op": "IMPLICIT_ACCOUNT",
+      "op_args": "IMPLICIT_ACCOUNT",
+      "ty": [
+        {
+          "name": "t_instr_IMPLICIT_ACCOUNT",
+          "premises": [],
+          "conclusion": "ctx :- IMPLICIT_ACCOUNT :: key_hash : A => contract unit : A"
+        }
+      ],
+      "semantics": [
+        {
+          "name": "bs_IMPLICIT_ACCOUNT",
+          "premises": [],
+          "conclusion": "IMPLICIT_ACCOUNT / s : S => implicit_account s : S"
+        }
+      ],
+      "category": "blockchain",
+      "documentation_short": "Create an implicit account",
+      "documentation": "Push on the stack the contract value corresponding to the\n`implicit account <http://tezos.gitlab.io/user/glossary.html#implicit-account>`_\nof a public key hash.  These contracts always\nhave type ``unit``.  There is no need to \"create\" implicit\naccounts before referring to them.\n"
+    },
+    {
+      "op": "INT",
+      "op_args": "INT",
+      "ty": [
+        {
+          "name": "t_instr_INT",
+          "premises": [],
+          "conclusion": "ctx :- INT :: nat : A => int : A"
+        }
+      ],
+      "semantics": [
+        {
+          "name": "bs_INT",
+          "premises": [],
+          "conclusion": "INT / z : S => z : S"
+        }
+      ],
+      "category": "arithmetic",
+      "documentation_short": "Convert a natural number to an integer"
+    },
+    {
+      "op": "ISNAT",
+      "op_args": "ISNAT",
+      "ty": [
+        {
+          "name": "t_instr_ISNAT",
+          "premises": [],
+          "conclusion": "ctx :- ISNAT :: int : A => option nat : A"
+        }
+      ],
+      "semantics": [
+        {
+          "name": "bs_ISNAT",
+          "premises": [],
+          "conclusion": "ISNAT / z : S => isnat z : S"
+        }
+      ],
+      "category": "arithmetic",
+      "documentation_short": "Convert a non-negative integer to a natural number",
+      "documentation": "The ``ISNAT`` instruction consumes an integer ``i`` and returns\na value of type ``option nat``.  If the integer is non-negative,\n``Some n`` is returned, where ``n`` is equal to ``i`` but\nrepresented as a natural number. Otherwise, ``None`` is\nreturned.\n"
+    },
+    {
+      "op": "ITER",
+      "op_args": "ITER code",
+      "ty": [
+        {
+          "name": "t_instr_ITER__list",
+          "premises": [
+            "ctx :- code :: ty1 : A => A"
+          ],
+          "conclusion": "ctx :- ITER code :: list ty1 : A => A"
+        },
+        {
+          "name": "t_instr_ITER__set",
+          "premises": [
+            "ctx :- code :: cty : A => A"
+          ],
+          "conclusion": "ctx :- ITER code :: set cty : A => A"
+        },
+        {
+          "name": "t_instr_ITER__map",
+          "premises": [
+            "ctx :- code :: ( pair kty vty ) : A => A"
+          ],
+          "conclusion": "ctx :- ITER code :: map kty vty : A => A"
+        }
+      ],
+      "semantics": [
+        {
+          "name": "bs_ITER__set_nil",
+          "premises": [],
+          "conclusion": "ITER body / {} : S => S"
+        },
+        {
+          "name": "bs_ITER__set_cons",
+          "premises": [
+            "body ; ITER body / x : tl : S => S'"
+          ],
+          "conclusion": "ITER body / { x ; < tl > } : S => S'"
+        },
+        {
+          "name": "bs_ITER__map_nil",
+          "premises": [],
+          "conclusion": "ITER body / {} : S => S"
+        },
+        {
+          "name": "bs_ITER__map_cons",
+          "premises": [
+            "body ; ITER body / ( Pair k v ) : m : S => S'"
+          ],
+          "conclusion": "ITER body / { Elt k v ; < m > } : S => S'"
+        },
+        {
+          "name": "bs_ITER__list_cons",
+          "premises": [
+            "body ; ITER body / d : tl : S => S'"
+          ],
+          "conclusion": "ITER body / { d ; < tl > } : S => S'"
+        },
+        {
+          "name": "bs_ITER__list_nil",
+          "premises": [],
+          "conclusion": "ITER body / {} : S => S"
+        }
+      ],
+      "category": "control_structure",
+      "documentation_short": "Iterate over a ``set``, ``list`` or ``map``",
+      "documentation": "\nIterate on a ``set``, ``list`` or ``map``.\n\nConsume a structure by applying the body expression to each of its\nelements:\n\n  - In the case of a ``list`` or ``set`` of elements of type ``ty1``, the body is applied to each\n    element, and must thus have the type ``ty1 : A => A``.\n  - In the case of a ``map`` of keys of type ``ty1`` and values of type ``ty2``, the body is\n    applied to each binding ``key`` to value ``val`` in the form of a pair ``Pair key\n    val``. Thus, the body must have the type ``Pair ty1 ty2 : A => A``.\n\nIn each case, the body has access to and can modify the underlying stack.\n"
+    },
+    {
+      "op": "LAMBDA",
+      "op_args": "LAMBDA ty1 ty2 code",
+      "ty": [
+        {
+          "name": "t_instr_LAMBDA",
+          "premises": [
+            "None :- code :: ty1 : [] => ty2 : []"
+          ],
+          "conclusion": "ctx :- LAMBDA ty1 ty2 code :: A => lambda ty1 ty2 : A"
+        }
+      ],
+      "semantics": [
+        {
+          "name": "bs_LAMBDA",
+          "premises": [],
+          "conclusion": "LAMBDA ty ty' i / S => { i : ty -> ty' } : S"
+        }
+      ],
+      "category": "control_structure",
+      "documentation_short": "Push a lambda onto the stack",
+      "documentation": "Push a lambda with parameter type ``ty1``, return type ``ty2`` and body ``code``\nonto the stack.\n"
+    },
+    {
+      "op": "LE",
+      "op_args": "LE",
+      "ty": [
+        {
+          "name": "t_instr_LE",
+          "premises": [],
+          "conclusion": "ctx :- LE :: int : A => bool : A"
+        }
+      ],
+      "semantics": [
+        {
+          "name": "bs_LE__tt",
+          "premises": [
+            "z <= 0"
+          ],
+          "conclusion": "LE / z : S => True : S"
+        },
+        {
+          "name": "bs_LE__ff",
+          "premises": [
+            "z > 0"
+          ],
+          "conclusion": "LE / z : S => False : S"
+        }
+      ],
+      "category": "arithmetic",
+      "documentation_short": "Check that the top of the stack is Less Than or Equal to zero",
+      "documentation": "The ``LE`` instruction consumes an integer and leaves ``True``\non the stack if it is less than or equal to ``0`` or ``False`` otherwise.\n\nIt typically follows a ``COMPARE`` instruction. The sequence of instructions\n``COMPARE; LE`` leaves ``True`` on the stack if the first stack\nelement is less than or equal to the second, and ``False`` otherwise.\n"
+    },
+    {
+      "op": "LEFT",
+      "op_args": "LEFT ty2",
+      "ty": [
+        {
+          "name": "t_instr_LEFT",
+          "premises": [],
+          "conclusion": "ctx :- LEFT ty2 :: ty1 : A => or ty1 ty2 : A"
+        }
+      ],
+      "semantics": [
+        {
+          "name": "bs_LEFT",
+          "premises": [],
+          "conclusion": "LEFT ty / v : S => ( Left v ) : S"
+        }
+      ],
+      "category": "data_structure",
+      "documentation_short": "Wrap a value in a union (left case)"
+    },
+    {
+      "op": "LOOP",
+      "op_args": "LOOP code",
+      "ty": [
+        {
+          "name": "t_instr_LOOP",
+          "premises": [
+            "ctx :- code :: A => bool : A"
+          ],
+          "conclusion": "ctx :- LOOP code :: bool : A => A"
+        }
+      ],
+      "semantics": [
+        {
+          "name": "bs_LOOP__tt",
+          "premises": [
+            "i1 ; LOOP i1 / S => S'"
+          ],
+          "conclusion": "LOOP i1 / True : S => S'"
+        },
+        {
+          "name": "bs_LOOP__ff",
+          "premises": [],
+          "conclusion": "LOOP i1 / False : S => S"
+        }
+      ],
+      "category": "control_structure",
+      "documentation_short": "A generic loop",
+      "documentation": "\nThe instruction ``LOOP`` consumes a stack ``b : S`` of type\n``bool : A``, i.e. where ``b`` is boolean and the rest of the\nstack is of any type ``A``. The body of the loop, ``code``, is\nexecuted as long as ``b`` is ``True``. The body has access to the stack ``S``\nbut must produce a stack of type ``bool : A``. If ``b`` is\n``False``, then the loop is terminated with the resulting stack ``S``.\n"
+    },
+    {
+      "op": "LOOP_LEFT",
+      "op_args": "LOOP_LEFT code",
+      "ty": [
+        {
+          "name": "t_instr_LOOP_LEFT",
+          "premises": [
+            "ctx :- code :: ty1 : A => or ty1 ty2 : A"
+          ],
+          "conclusion": "ctx :- LOOP_LEFT code :: or ty1 ty2 : A => ty2 : A"
+        }
+      ],
+      "semantics": [
+        {
+          "name": "bs_LOOP_LEFT__tt",
+          "premises": [
+            "i1 ; LOOP_LEFT i1 / d : S => S'"
+          ],
+          "conclusion": "LOOP_LEFT i1 / Left d : S => S'"
+        },
+        {
+          "name": "bs_LOOP_LEFT__ff",
+          "premises": [],
+          "conclusion": "LOOP_LEFT i1 / Right d : S => d : S'"
+        }
+      ],
+      "category": "control_structure",
+      "documentation_short": "Loop with accumulator",
+      "documentation": "The ``LOOP_LEFT body`` instruction executes ``body`` as long\nas the top element of the stack is ``(Left a)``. The ``body``\nof the loop must consume a value of type ``a`` and produce a\nvalue of type ``(or a b)``.\n\nIf the top element is ``(Right b)``, at the beginning of the loop or at\nthe end of an iteration, then the loop is terminated and this value is\nleft on the top of the stack.\n",
+      "examples": [
+        {
+          "name": "Sum list",
+          "description": "This contract reverses the list of strings passed by parameter and stores it.",
+          "path": "opcodes/loop_left.tz",
+          "input": "{ \"a\" ; \"b\" ; \"c\" }",
+          "initial_storage": "{}",
+          "final_storage": "{ \"c\" ; \"b\" ; \"a\" }"
+        }
+      ]
+    },
+    {
+      "op": "LSL",
+      "op_args": "LSL",
+      "ty": [
+        {
+          "name": "t_instr_LSL",
+          "premises": [],
+          "conclusion": "ctx :- LSL :: nat : nat : A => nat : A"
+        }
+      ],
+      "semantics": [
+        {
+          "name": "bs_LSL",
+          "premises": [
+            "z2 <= 256"
+          ],
+          "conclusion": "LSL / z1 : z2 : S => ( z1 << z2 ) : S"
+        },
+        {
+          "name": "bs_LSL__fail",
+          "premises": [
+            "z2 > 256"
+          ],
+          "conclusion": "LSL / z1 : z2 : S => [FAILED]"
+        }
+      ],
+      "category": "arithmetic",
+      "documentation_short": "Logically left shift a natural number",
+      "documentation": "\nThe ``LSL`` instruction consumes two natural numbers and produces\nthe first number logically left-shifted by second number.\n\nThis instruction is only defined if the second number is less\nthan or equal to 256.\n"
+    },
+    {
+      "op": "LSR",
+      "op_args": "LSR",
+      "ty": [
+        {
+          "name": "t_instr_LSR",
+          "premises": [],
+          "conclusion": "ctx :- LSR :: nat : nat : A => nat : A"
+        }
+      ],
+      "semantics": [
+        {
+          "name": "bs_LSR",
+          "premises": [],
+          "conclusion": "LSR / z1 : z2 : S => ( z1 >> z2 ) : S"
+        }
+      ],
+      "category": "arithmetic",
+      "documentation_short": "Logically right shift a natural number",
+      "documentation": "The ``LSR`` instruction consumes two natural numbers and produces\nthe first number logically right-shifted by second number.\n\nThis instruction is only defined if the second number is less than or equal to 256.\n"
+    },
+    {
+      "op": "LT",
+      "op_args": "LT",
+      "ty": [
+        {
+          "name": "t_instr_LT",
+          "premises": [],
+          "conclusion": "ctx :- LT :: int : A => bool : A"
+        }
+      ],
+      "semantics": [
+        {
+          "name": "bs_LT__tt",
+          "premises": [
+            "z < 0"
+          ],
+          "conclusion": "LT / z : S => True : S"
+        },
+        {
+          "name": "bs_LT__ff",
+          "premises": [
+            "z >= 0"
+          ],
+          "conclusion": "LT / z : S => False : S"
+        }
+      ],
+      "category": "arithmetic",
+      "documentation_short": "Check that the top of the stack is Less Than zero",
+      "documentation": "The ``LT`` instruction consumes an integer and leaves ``True``\non the stack if it is less than ``0`` and ``False`` otherwise.\n\nIt is typically composed with ``COMPARE``: the instruction sequence\n``COMPARE; LT`` leaves ``True`` on the stack if the first stack\nelement is less than the second, and ``False`` otherwise.\n"
+    },
+    {
+      "op": "MAP",
+      "op_args": "MAP code",
+      "ty": [
+        {
+          "name": "t_instr_MAP__list",
+          "premises": [
+            "ctx :- code :: ty1 : A => ty2 : A"
+          ],
+          "conclusion": "ctx :- MAP code :: list ty1 : A => list ty2 : A"
+        },
+        {
+          "name": "t_instr_MAP__map",
+          "premises": [
+            "ctx :- code :: ( pair kty ty1 ) : A => ty2 : A"
+          ],
+          "conclusion": "ctx :- MAP code :: map kty ty1 : A => map kty ty2 : A"
+        }
+      ],
+      "semantics": [
+        {
+          "name": "bs_MAP__list_nil",
+          "premises": [],
+          "conclusion": "MAP body / {} : S => {} : S"
+        },
+        {
+          "name": "bs_MAP__list_cons",
+          "premises": [
+            "body / d : S => d' : S",
+            "MAP body / tl : S => tl' : S"
+          ],
+          "conclusion": "MAP body / { d ; < tl > } : S => { d' ; < tl' > } : S"
+        },
+        {
+          "name": "bs_MAP__map_nil",
+          "premises": [],
+          "conclusion": "MAP body / {} : S => {} : S"
+        },
+        {
+          "name": "bs_MAP__map_cons",
+          "premises": [
+            "body / k : v : S => v' : S",
+            "MAP body / m : S => m' : S"
+          ],
+          "conclusion": "MAP body / { Elt k v ; < m > } : S => { Elt k v' ; < m' > } : S"
+        }
+      ],
+      "category": "data_structure",
+      "documentation_short": "Apply the body expression to each element of a ``list`` or ``map``.",
+      "documentation": "\nMap over a ``list`` or ``map``.\n\nUpdate a structure by applying the body expression to each\nof its elements:\n\n  - In the case of a ``list`` of elements of type ``ty1``, the body is applied to each\n    element, and must thus have the type ``ty1 : A => A``.\n  - In the case of a ``map`` of keys of type ``ty1`` and values of type ``ty2``, the body is\n    applied to each binding ``key`` to value ``val`` in the form of a pair ``Pair key\n    val``. Thus, the body must have the type ``Pair ty1 ty2 : A => A``.\n\nIn each case, the body has access to and can modify the\nunderlying stack.\n"
+    },
+    {
+      "op": "MEM",
+      "op_args": "MEM",
+      "ty": [
+        {
+          "name": "t_instr_MEM__set",
+          "premises": [],
+          "conclusion": "ctx :- MEM :: cty : set cty : A => bool : A"
+        },
+        {
+          "name": "t_instr_MEM__map",
+          "premises": [],
+          "conclusion": "ctx :- MEM :: kty : map kty vty : A => bool : A"
+        },
+        {
+          "name": "t_instr_MEM__big_map",
+          "premises": [],
+          "conclusion": "ctx :- MEM :: kty : big_map kty vty : A => bool : A"
+        }
+      ],
+      "semantics": [
+        {
+          "name": "bs_MEM__set_empty",
+          "premises": [],
+          "conclusion": "MEM / x : {} : S => False : S"
+        },
+        {
+          "name": "bs_MEM__set_later",
+          "premises": [
+            "COMPARE / x : y : [] => 1 : []",
+            "MEM / x : tl : S => b : S"
+          ],
+          "conclusion": "MEM / x : { y ; < tl > } : S => b : S"
+        },
+        {
+          "name": "bs_MEM__set_found",
+          "premises": [
+            "COMPARE / x : y : [] => 0 : []"
+          ],
+          "conclusion": "MEM / x : { y ; < tl > } : S => True : S"
+        },
+        {
+          "name": "bs_MEM__set_nexists",
+          "premises": [
+            "COMPARE / x : y : [] => - 1 : []"
+          ],
+          "conclusion": "MEM / x : { y ; < tl > } : S => False : S"
+        },
+        {
+          "name": "bs_MEM__map_empty",
+          "premises": [],
+          "conclusion": "MEM / x : {} : S => False : S"
+        },
+        {
+          "name": "bs_MEM__map_later",
+          "premises": [
+            "COMPARE / x : k : [] => 1 : []",
+            "MEM / x : m : S => b : S"
+          ],
+          "conclusion": "MEM / x : { Elt k v ; < m > } : S => b : S"
+        },
+        {
+          "name": "bs_MEM__map_now",
+          "premises": [
+            "COMPARE / x : k : [] => 0 : []"
+          ],
+          "conclusion": "MEM / x : { Elt k v ; < m > } : S => True : S"
+        },
+        {
+          "name": "bs_MEM__map_nexists",
+          "premises": [
+            "COMPARE / x : k : [] => - 1 : []"
+          ],
+          "conclusion": "MEM / x : { Elt k v ; < m > } : S => False : S"
+        }
+      ],
+      "category": "data_structure",
+      "documentation_short": "Check for the presence of a binding for a key in a ``map``, ``set`` or ``big_map``",
+      "documentation": "The instruction ``MEM`` consumes a value and a data structure of\ntype ``map``, ``set`` or ``big_map``.\n\nFor ``map`` and ``big_map``, ``MEM`` returns ``True`` if the\nvalue is a bound key in the data structure, and ``False``\notherwise.\n\nFor ``set``, ``True`` is returned if the value is a member of\nthe ``set``, and ``False`` otherwise.\n"
+    },
+    {
+      "op": "MUL",
+      "op_args": "MUL",
+      "ty": [
+        {
+          "name": "t_instr_MUL__nat_nat",
+          "premises": [],
+          "conclusion": "ctx :- MUL :: nat : nat : A => nat : A"
+        },
+        {
+          "name": "t_instr_MUL__nat_int",
+          "premises": [],
+          "conclusion": "ctx :- MUL :: nat : int : A => int : A"
+        },
+        {
+          "name": "t_instr_MUL__int_nat",
+          "premises": [],
+          "conclusion": "ctx :- MUL :: int : nat : A => int : A"
+        },
+        {
+          "name": "t_instr_MUL__int_int",
+          "premises": [],
+          "conclusion": "ctx :- MUL :: int : int : A => int : A"
+        },
+        {
+          "name": "t_instr_MUL__mutez_nat",
+          "premises": [],
+          "conclusion": "ctx :- MUL :: mutez : nat : A => mutez : A"
+        },
+        {
+          "name": "t_instr_MUL__nat_mutez",
+          "premises": [],
+          "conclusion": "ctx :- MUL :: nat : mutez : A => mutez : A"
+        }
+      ],
+      "semantics": [
+        {
+          "name": "bs_MUL",
+          "premises": [],
+          "conclusion": "MUL / z1 : z2 : S => ( z1 * z2 ) : S"
+        }
+      ],
+      "category": "arithmetic",
+      "documentation_short": "Multiply two numerical values",
+      "documentation": "The ``MUL`` instruction consumes two natural numbers (int or\nnat) and produces their product. ``MUL`` can also be used to\nmultiply a ``mutez`` with a natural number.\n"
+    },
+    {
+      "op": "NEG",
+      "op_args": "NEG",
+      "ty": [
+        {
+          "name": "t_instr_NEG__nat",
+          "premises": [],
+          "conclusion": "ctx :- NEG :: nat : A => int : A"
+        },
+        {
+          "name": "t_instr_NEG__int",
+          "premises": [],
+          "conclusion": "ctx :- NEG :: int : A => int : A"
+        }
+      ],
+      "semantics": [
+        {
+          "name": "bs_NEG",
+          "premises": [],
+          "conclusion": "NEG / z : S => - z : S"
+        }
+      ],
+      "category": "arithmetic",
+      "documentation_short": "Negate a numerical value",
+      "documentation": "\nThe ``NEG`` instruction consumes a natural number (``int`` or\n``nat``) and produces their negation, in the form of an\n``int``.\n"
+    },
+    {
+      "op": "NEQ",
+      "op_args": "NEQ",
+      "ty": [
+        {
+          "name": "t_instr_NEQ",
+          "premises": [],
+          "conclusion": "ctx :- NEQ :: int : A => bool : A"
+        }
+      ],
+      "semantics": [
+        {
+          "name": "bs_NEQ__ff",
+          "premises": [],
+          "conclusion": "NEQ / 0 : S => False : S"
+        },
+        {
+          "name": "bs_NEQ__tt",
+          "premises": [
+            "z <> 0"
+          ],
+          "conclusion": "NEQ / z : S => True : S"
+        }
+      ],
+      "category": "arithmetic",
+      "documentation_short": "Check that the top of the stack does Not EQual zero",
+      "documentation": "The ``NEQ`` instruction consumes an integer and leaves ``True``\non the stack if it is not ``0`` and ``False`` otherwise.\n\nIt is typically composed with ``COMPARE``: the instruction sequence\n``COMPARE; NEQ`` leaves ``True`` on the stack if the two top\nstack elements are not equal, and ``False`` otherwise.\n"
+    },
+    {
+      "op": "NIL",
+      "op_args": "NIL ty1",
+      "ty": [
+        {
+          "name": "t_instr_NIL",
+          "premises": [],
+          "conclusion": "ctx :- NIL ty1 :: A => list ty1 : A"
+        }
+      ],
+      "semantics": [
+        {
+          "name": "bs_NIL",
+          "premises": [],
+          "conclusion": "NIL ty / S => {} : S"
+        }
+      ],
+      "category": "data_structure",
+      "documentation_short": "Push an empty list",
+      "documentation": "\nThe ``NIL ty1`` instruction produces the empty list of type ``list ty1``.\nIt is functionally equivalent to ``PUSH (list ty1) {}``.\n"
+    },
+    {
+      "op": "NONE",
+      "op_args": "NONE ty1",
+      "ty": [
+        {
+          "name": "t_instr_NONE",
+          "premises": [],
+          "conclusion": "ctx :- NONE ty1 :: A => option ty1 : A"
+        }
+      ],
+      "semantics": [
+        {
+          "name": "bs_NONE",
+          "premises": [],
+          "conclusion": "NONE ty / S => None : S"
+        }
+      ],
+      "category": "data_structure",
+      "documentation_short": "Push the absent optional value",
+      "documentation": "\nThe ``NONE ty1`` instruction produces the\nabsent optional value ``None`` of type ``option ty1``.\n\nIt is functionally equivalent to ``PUSH (option ty1) None``.\n"
+    },
+    {
+      "op": "NOT",
+      "op_args": "NOT",
+      "ty": [
+        {
+          "name": "t_instr_NOT__bool",
+          "premises": [],
+          "conclusion": "ctx :- NOT :: bool : A => bool : A"
+        },
+        {
+          "name": "t_instr_NOT__nat",
+          "premises": [],
+          "conclusion": "ctx :- NOT :: nat : A => int : A"
+        },
+        {
+          "name": "t_instr_NOT__int",
+          "premises": [],
+          "conclusion": "ctx :- NOT :: int : A => int : A"
+        }
+      ],
+      "semantics": [
+        {
+          "name": "bs_NOT__1",
+          "premises": [],
+          "conclusion": "NOT / True : S => False : S"
+        },
+        {
+          "name": "bs_NOT__2",
+          "premises": [],
+          "conclusion": "NOT / False : S => True : S"
+        },
+        {
+          "name": "bs_NOT__bit",
+          "premises": [],
+          "conclusion": "NOT / z : S => ~ z : S"
+        }
+      ],
+      "category": "logic",
+      "documentation_short": "Boolean negation and bitwise complement",
+      "documentation": "The ``NOT`` instruction is defined for ``bool``,\n``nat`` and ``int``.\n\nFor ``bool``, it returns the logical negation of its operand.\n\nFor numerical values, it returns the `two's\ncomplement <https://en.wikipedia.org/wiki/Two%27s_complement>`_ as\nan ``int``. The return type is ``int`` and not ``nat`` because the sign is\nalso negated. For instance, the boolean negation of 0 is -1. To\nget a natural back, a possibility is to use AND with an unsigned\nmask afterwards.\n"
+    },
+    {
+      "op": "NOW",
+      "op_args": "NOW",
+      "ty": [
+        {
+          "name": "t_instr_NOW",
+          "premises": [],
+          "conclusion": "ctx :- NOW :: A => timestamp : A"
+        }
+      ],
+      "semantics": [
+        {
+          "name": "bs_NOW",
+          "premises": [],
+          "conclusion": "NOW / S => now : S"
+        }
+      ],
+      "category": "blockchain",
+      "documentation_short": "Push block timestamp",
+      "documentation": "Push the timestamp of the block whose validation triggered this\nexecution. This timestamp does not change during the execution of\nthe contract.\n"
+    },
+    {
+      "op": "OR",
+      "op_args": "OR",
+      "ty": [
+        {
+          "name": "t_instr_OR__bool",
+          "premises": [],
+          "conclusion": "ctx :- OR :: bool : bool : A => bool : A"
+        },
+        {
+          "name": "t_instr_OR__nat",
+          "premises": [],
+          "conclusion": "ctx :- OR :: nat : nat : A => nat : A"
+        }
+      ],
+      "semantics": [
+        {
+          "name": "bs_OR__1",
+          "premises": [],
+          "conclusion": "OR / True : x : S => True : S"
+        },
+        {
+          "name": "bs_OR__2",
+          "premises": [],
+          "conclusion": "OR / x : True : S => True : S"
+        },
+        {
+          "name": "bs_OR__3",
+          "premises": [],
+          "conclusion": "OR / False : False : S => False : S"
+        },
+        {
+          "name": "bs_OR__bit",
+          "premises": [],
+          "conclusion": "OR / z1 : z2 : S => ( z1 | z2 ) : S"
+        }
+      ],
+      "category": "logic",
+      "documentation_short": "Boolean and bitwise OR",
+      "documentation": "The instruction ``OR`` is defined on boolean and natural number operands.\nIn the former case, the result is the logical OR of the operands.\nIn the latter case, the result is the bitwise OR of the operands.\n"
+    },
+    {
+      "op": "PACK",
+      "op_args": "PACK",
+      "ty": [
+        {
+          "name": "t_instr_PACK",
+          "premises": [],
+          "conclusion": "ctx :- PACK :: ty1 : A => bytes : A"
+        }
+      ],
+      "semantics": [
+        {
+          "name": "bs_PACK",
+          "premises": [],
+          "conclusion": "PACK / d : S => pack d : S"
+        }
+      ],
+      "category": "data_structure",
+      "documentation_short": "Serialize data",
+      "documentation": "Serializes any value of packable type to its optimized binary representation, of type ``bytes``.\n",
+      "examples": [
+        {
+          "name": "``PACK`` -- ``UNPACK``",
+          "description": "This example packs the left part of the parameter, and\nasserts that it is equal to the right part of the parameter.\nIt then verifies that the right part unpacks to a valid\nMichelson value.\n",
+          "path": "opcodes/packunpack.tz",
+          "input": "(Pair (Pair (Pair \"toto\" {3;7;9;1}) {1;2;3}) 0x05070707070100000004746f746f020000000800030007000900010200000006000100020003)",
+          "initial_storage": "Unit",
+          "final_storage": "Unit"
+        }
+      ]
+    },
+    {
+      "op": "PAIR",
+      "op_args": "PAIR",
+      "ty": [
+        {
+          "name": "t_instr_PAIR",
+          "premises": [],
+          "conclusion": "ctx :- PAIR :: ty1 : ty2 : A => pair ty1 ty2 : A"
+        }
+      ],
+      "semantics": [
+        {
+          "name": "bs_PAIR",
+          "premises": [],
+          "conclusion": "PAIR / d1 : d2 : S => ( Pair d1 d2 ) : S"
+        }
+      ],
+      "category": "data_structure",
+      "documentation_short": "Build a pair from the stack's top two elements"
+    },
+    {
+      "op": "PUSH",
+      "op_args": "PUSH ty1 x",
+      "ty": [
+        {
+          "name": "t_instr_PUSH",
+          "premises": [
+            "ctx :- x :: ty1"
+          ],
+          "conclusion": "ctx :- PUSH ty1 x :: A => ty1 : A"
+        }
+      ],
+      "semantics": [
+        {
+          "name": "bs_PUSH",
+          "premises": [],
+          "conclusion": "PUSH ty d / S => d : S"
+        }
+      ],
+      "category": "stack",
+      "documentation_short": "Push a constant value of a given type onto the stack"
+    },
+    {
+      "op": "RIGHT",
+      "op_args": "RIGHT ty1",
+      "ty": [
+        {
+          "name": "t_instr_RIGHT",
+          "premises": [],
+          "conclusion": "ctx :- RIGHT ty1 :: ty2 : A => or ty1 ty2 : A"
+        }
+      ],
+      "semantics": [
+        {
+          "name": "bs_RIGHT",
+          "premises": [],
+          "conclusion": "RIGHT ty / v : S => ( Right v ) : S"
+        }
+      ],
+      "category": "data_structure",
+      "documentation_short": "Wrap a value in a union (right case)"
+    },
+    {
+      "op": "SELF",
+      "op_args": "SELF",
+      "ty": [
+        {
+          "name": "t_instr_SELF",
+          "premises": [
+            "ctx = Some ty"
+          ],
+          "conclusion": "ctx :- SELF :: A => contract ty : A"
+        }
+      ],
+      "semantics": [
+        {
+          "name": "bs_SELF",
+          "premises": [],
+          "conclusion": "SELF / S => self : S"
+        }
+      ],
+      "category": "blockchain",
+      "documentation_short": "Push the current contract",
+      "documentation": "The ``SELF`` contract pushes the current contract, of type\n``contract ty1`` where ``ty1`` is the type of the current\ncontract.\n\nLike ``CONTRACT``,\nthe ``SELF`` instruction has a variant ``SELF %entrypoint``.\nIt returns the ``contract ty1`` corresponding to a specific\n`entrypoint <http://tezos.gitlab.io/whitedoc/michelson.html#entrypoints>`_\nof the current contract, where ``ty1`` is the type of the ``%entrypoint``.\nUnlike ``CONTRACT``, ``SELF %default`` is allowed and is\nstrictly equal to ``SELF``. The contract will not type check if\n``%entrypoint`` does not exists.\n\nThis works as follows:\n\n::\n\n  +----------------------+------------------------------------------+\n  |  instruction         | output contract                          |\n  +----------------------+------------------------------------------+\n  |  SELF                | \"addr_of_current_contract\"               |\n  +----------------------+                                          |\n  |  SELF %default       |                                          |\n  +----------------------+------------------------------------------+\n  |  SELF %A             | \"addr_of_current_contract%A\" if current  |\n  |                      | contract has an entrypoint %A            |\n  |                      | (and A <> default)                       |\n  +----------------------+------------------------------------------+\n",
+      "examples": [
+        {
+          "name": "Callback self at entrypoint",
+          "description": "This contract has two entrypoints: ``have_fun`` and\n``default``. The ``default`` entrypoint emits a transfer\ntoken operation that calls back the contract itself, at the\n``have_fun`` entrypoint, passing a ``big_map`` as\nparameter. The ``have_fun`` entrypoint unthankfully drops\nthe received big_map.\n",
+          "path": "opcodes/big_map_to_self.tz",
+          "input": "Right Unit",
+          "initial_storage": "{}",
+          "final_storage": "{}",
+          "hide_final_storage": true
+        },
+        {
+          "name": "Self with default entrypoint",
+          "description": "This example demonstrates using ``SELF`` with and without entrypoint annotations, as well as the ``default`` entrypoint.",
+          "path": "opcodes/self_with_default_entrypoint.tz",
+          "input": "Left (Left 0)",
+          "initial_storage": "Unit",
+          "final_storage": "Unit",
+          "hide_final_storage": true
+        },
+        {
+          "name": "Self with entrypoint",
+          "description": "This example demonstrates using ``SELF`` with and without entrypoint annotations. In this example, the ``CAST`` noop is used to assert the type of the contract pushed by ``SELF``.",
+          "path": "opcodes/self_with_entrypoint.tz",
+          "input": "Left (Left 0)",
+          "initial_storage": "Unit",
+          "final_storage": "Unit",
+          "hide_final_storage": true
+        }
+      ]
+    },
+    {
+      "op": "SENDER",
+      "op_args": "SENDER",
+      "ty": [
+        {
+          "name": "t_instr_SENDER",
+          "premises": [],
+          "conclusion": "ctx :- SENDER :: A => address : A"
+        }
+      ],
+      "semantics": [
+        {
+          "name": "bs_SENDER",
+          "premises": [],
+          "conclusion": "SENDER / S => sender : S"
+        }
+      ],
+      "category": "blockchain",
+      "documentation_short": "Push the contract that initiated the current internal transaction",
+      "documentation": "\nPush the contract that initiated the current\ninternal transaction. It may be the ``SOURCE``, but may\nalso not if the source sent an order to an intermediate\nsmart contract, which then called the current contract.\n\nConsider a scenario involving two contracts, ``receiver`` and\n``proxy``.  The contract ``proxy``, transfers any amount\nreceived in a call to ``receiver``.  Assume a third\ncontract ``bootstrap2`` creates a transaction to the ``proxy``\ncontract sending 99 \ua729 . Then ``proxy`` creates an internal\ntransaction that calls ``receiver``:\n\n.. image:: static/proxy-receiver.svg\n  :alt: Distinction between ``SOURCE`` and ``SENDER``.\n\nIn this scenario, the source of the internal transaction (from\n``proxy`` to ``receiver``) is ``bootstrap2``, whereas the sender\nof that transaction is the ``proxy``. That is, if ``SOURCE`` is\ncalled in ``receiver``, then address of ``bootstrap2`` is\nreturned. If ``SENDER`` is called in ``receiver``, then address\nof ``proxy`` is returned.\n\nIf instead, ``bootstrap2`` calls ``receiver`` directly, then\n``bootstrap2`` would be both source and sender.\n"
+    },
+    {
+      "op": "SET_DELEGATE",
+      "op_args": "SET_DELEGATE",
+      "ty": [
+        {
+          "name": "t_instr_SET_DELEGATE",
+          "premises": [],
+          "conclusion": "ctx :- SET_DELEGATE :: option key_hash : A => operation : A"
+        }
+      ],
+      "semantics": [
+        {
+          "name": "bs_SET_DELEGATE__set",
+          "premises": [],
+          "conclusion": "SET_DELEGATE / Some kh : S => set_delegate kh : S"
+        },
+        {
+          "name": "bs_SET_DELEGATE__remove",
+          "premises": [],
+          "conclusion": "SET_DELEGATE / None : S => remove_delegation : S"
+        }
+      ],
+      "category": "blockchain",
+      "documentation_short": "Push a delegation operation",
+      "documentation": "The ``SET_DELEGATE`` is used to add, update or remove a\ndelegation.  It consumes an operand of type ``option\nkey_hash``.\n\nIf the operand is ``None``, then the produced operation will\nremove the executing contracts current delegation, if any. If\nthe operand is ``Some kh``, then the produced operation will\nupdate or add a delegation, from the executing contract to the\nimplicit account specified by ``kh``.\n"
+    },
+    {
+      "op": "SHA256",
+      "op_args": "SHA256",
+      "ty": [
+        {
+          "name": "t_instr_SHA256",
+          "premises": [],
+          "conclusion": "ctx :- SHA256 :: bytes : A => bytes : A"
+        }
+      ],
+      "semantics": [
+        {
+          "name": "bs_SHA256",
+          "premises": [],
+          "conclusion": "SHA256 / byt : S => hash_sha256 byt : S"
+        }
+      ],
+      "category": "crypto",
+      "documentation_short": "Compute a SHA-256 cryptographic hash",
+      "documentation": "Compute the cryptographic hash of the top of the stack using the SHA-256 cryptographic hash function.\n"
+    },
+    {
+      "op": "SHA512",
+      "op_args": "SHA512",
+      "ty": [
+        {
+          "name": "t_instr_SHA512",
+          "premises": [],
+          "conclusion": "ctx :- SHA512 :: bytes : A => bytes : A"
+        }
+      ],
+      "semantics": [
+        {
+          "name": "bs_SHA512",
+          "premises": [],
+          "conclusion": "SHA512 / byt : S => hash_sha512 byt : S"
+        }
+      ],
+      "category": "crypto",
+      "documentation_short": "Compute a SHA-512 cryptographic hash",
+      "documentation": "Compute the cryptographic hash of the top of the stack using the SHA-512 cryptographic hash function.\n"
+    },
+    {
+      "op": "SIZE",
+      "op_args": "SIZE",
+      "ty": [
+        {
+          "name": "t_instr_SIZE__set",
+          "premises": [],
+          "conclusion": "ctx :- SIZE :: set cty : A => nat : A"
+        },
+        {
+          "name": "t_instr_SIZE__map",
+          "premises": [],
+          "conclusion": "ctx :- SIZE :: map kty vty : A => nat : A"
+        },
+        {
+          "name": "t_instr_SIZE__list",
+          "premises": [],
+          "conclusion": "ctx :- SIZE :: list ty1 : A => nat : A"
+        },
+        {
+          "name": "t_instr_SIZE__string",
+          "premises": [],
+          "conclusion": "ctx :- SIZE :: string : A => nat : A"
+        },
+        {
+          "name": "t_instr_SIZE__bytes",
+          "premises": [],
+          "conclusion": "ctx :- SIZE :: bytes : A => nat : A"
+        }
+      ],
+      "semantics": [
+        {
+          "name": "bs_SIZE__string",
+          "premises": [],
+          "conclusion": "SIZE / s : S => ( length s ) : S"
+        },
+        {
+          "name": "bs_SIZE__set_nil",
+          "premises": [],
+          "conclusion": "SIZE / {} : S => 0 : S"
+        },
+        {
+          "name": "bs_SIZE__set_cons",
+          "premises": [
+            "SIZE / tl : S => z : S"
+          ],
+          "conclusion": "SIZE / { d ; < tl > } : S => 1 + z : S"
+        },
+        {
+          "name": "bs_SIZE__map_nil",
+          "premises": [],
+          "conclusion": "SIZE / {} : S => 0 : S"
+        },
+        {
+          "name": "bs_SIZE__map_cons",
+          "premises": [
+            "SIZE / m : S => z : S"
+          ],
+          "conclusion": "SIZE / { Elt d1 d2 ; < m > } : S => 1 + z : S"
+        },
+        {
+          "name": "bs_SIZE__list_nil",
+          "premises": [],
+          "conclusion": "SIZE / {} : S => 0 : S"
+        },
+        {
+          "name": "bs_SIZE__list_cons",
+          "premises": [
+            "SIZE / tl : S => z : S"
+          ],
+          "conclusion": "SIZE / { d ; < tl > } : S => 1 + z : S"
+        }
+      ],
+      "category": "data_structure",
+      "documentation_short": "Obtain size of a ``string``, ``list``, ``set``, ``map`` or byte sequence",
+      "documentation": "The ``SIZE`` instruction consumes the\ntop element of the stack and returns its \"size\" (see below) as a ``nat``. It is defined for values of type  ``string``, ``list``, ``set``, ``map`` and byte sequences ``bytes``.\n\n- For a ``string`` value, it returns the number of characters.\n- For a ``list``, it returns the number of elements.\n- For a ``set``, it returns the number of elements.\n- For a ``map``, it returns the number of key-value pairs.\n- For a byte sequence ``bytes``, it returns the number of bytes in the sequence.\n"
+    },
+    {
+      "op": "SLICE",
+      "op_args": "SLICE",
+      "ty": [
+        {
+          "name": "t_instr_SLICE__string",
+          "premises": [],
+          "conclusion": "ctx :- SLICE :: nat : nat : string : A => option string : A"
+        },
+        {
+          "name": "t_instr_SLICE__bytes",
+          "premises": [],
+          "conclusion": "ctx :- SLICE :: nat : nat : bytes : A => option bytes : A"
+        }
+      ],
+      "semantics": [
+        {
+          "name": "bs_SLICE__some",
+          "premises": [
+            "z1 + z2 < length s"
+          ],
+          "conclusion": "SLICE / z1 : z2 : s : S => Some ( slice s z1 z2 ) : S"
+        },
+        {
+          "name": "bs_SLICE",
+          "premises": [
+            "z1 + z2 >= length s"
+          ],
+          "conclusion": "SLICE / z1 : z2 : s : S => None : S"
+        }
+      ],
+      "category": "data_structure",
+      "documentation_short": "Obtain a substring or subsequence of a ``string`` respectively byte sequence ``bytes``",
+      "documentation": "The ``SLICE`` instruction consumes two natural numbers ``offset`` and ``length``\nand a character sequence (``string``) or bytes sequence (``bytes``).\n\nIf ``offset`` and ``length`` are in bounds, i.e.\n``offset + start  < len``, then\nit returns a substring, respectively subsequence, ``Some v`` of\nlength ``length`` starting at ``offset`` (where offset 0 denotes\nthe first element) of the sequence.\n\nIf ``offset`` and ``length`` is out of bounds, i.e.\n``offset + length >= len`` (where ``len`` is the length\nof the sequence), then ``None`` is returned.\n"
+    },
+    {
+      "op": "SOME",
+      "op_args": "SOME",
+      "ty": [
+        {
+          "name": "t_instr_SOME",
+          "premises": [],
+          "conclusion": "ctx :- SOME :: ty1 : A => option ty1 : A"
+        }
+      ],
+      "semantics": [
+        {
+          "name": "bs_SOME",
+          "premises": [],
+          "conclusion": "SOME / v : S => ( Some v ) : S"
+        }
+      ],
+      "category": "data_structure",
+      "documentation_short": "Wrap an existing optional value",
+      "documentation": "\nThe ``SOME`` instruction wraps the top element ``x`` of the\nstack, of type ``ty1`` into the existing optional value ``Some\nx`` of type ``option ty1``.\n"
+    },
+    {
+      "op": "SOURCE",
+      "op_args": "SOURCE",
+      "ty": [
+        {
+          "name": "t_instr_SOURCE",
+          "premises": [],
+          "conclusion": "ctx :- SOURCE :: A => address : A"
+        }
+      ],
+      "semantics": [
+        {
+          "name": "bs_SOURCE",
+          "premises": [],
+          "conclusion": "SOURCE / S => source : S"
+        }
+      ],
+      "category": "blockchain",
+      "documentation_short": "Push the contract that initiated the current transaction",
+      "documentation": "Push the contract who signed the transaction initiating this\nexecution. Note that this contract is necessarily an implicit\naccount since smart contracts can't sign transactions. They can\nhowever emit internal, unsigned, transactions.\n\nNote that since ``TRANSFER_TOKENS`` instructions can be chained,\n``SOURCE`` and ``SENDER`` are not necessarily the same.  See\n``SENDER`` for a more detailed discussion of this distinction.\n"
+    },
+    {
+      "op": "SUB",
+      "op_args": "SUB",
+      "ty": [
+        {
+          "name": "t_instr_SUB__nat_nat",
+          "premises": [],
+          "conclusion": "ctx :- SUB :: nat : nat : A => int : A"
+        },
+        {
+          "name": "t_instr_SUB__nat_int",
+          "premises": [],
+          "conclusion": "ctx :- SUB :: nat : int : A => int : A"
+        },
+        {
+          "name": "t_instr_SUB__int_nat",
+          "premises": [],
+          "conclusion": "ctx :- SUB :: int : nat : A => int : A"
+        },
+        {
+          "name": "t_instr_SUB__int_int",
+          "premises": [],
+          "conclusion": "ctx :- SUB :: int : int : A => int : A"
+        },
+        {
+          "name": "t_instr_SUB__timestamp_int",
+          "premises": [],
+          "conclusion": "ctx :- SUB :: timestamp : int : A => timestamp : A"
+        },
+        {
+          "name": "t_instr_SUB__timestamp_timestamp",
+          "premises": [],
+          "conclusion": "ctx :- SUB :: timestamp : timestamp : A => int : A"
+        },
+        {
+          "name": "t_instr_SUB__mutez_mutez",
+          "premises": [],
+          "conclusion": "ctx :- SUB :: mutez : mutez : A => mutez : A"
+        }
+      ],
+      "semantics": [
+        {
+          "name": "bs_SUB",
+          "premises": [],
+          "conclusion": "SUB / z1 : z2 : S => ( z1 - z2 ) : S"
+        }
+      ],
+      "category": "arithmetic",
+      "documentation_short": "Subtract two numerical values",
+      "documentation": "\nConsumes two numerical values and returns their difference. The\nreturn type depends on the operand type:\n\n  - Integers can be subtracted from natural numbers and\n    vice versa, in which case the result type is always an\n    integer.\n  - Integers can be subtracted from timestamps, in which case the\n    result is the timestamp offset by the integer.\n  - Timestamps can also be subtracted from timestamps, in which\n    case the result is a integer denoting their difference\n    in seconds.\n"
+    },
+    {
+      "op": "SWAP",
+      "op_args": "SWAP",
+      "ty": [
+        {
+          "name": "t_instr_SWAP",
+          "premises": [],
+          "conclusion": "ctx :- SWAP :: ty1 : ty2 : A => ty2 : ty1 : A"
+        }
+      ],
+      "semantics": [
+        {
+          "name": "bs_SWAP",
+          "premises": [],
+          "conclusion": "SWAP / d1 : d2 : S => d2 : d1 : S"
+        }
+      ],
+      "category": "stack",
+      "documentation_short": "Swap the top two elements of the stack",
+      "documentation": "The ``SWAP`` instruction swaps  the top two elements of the stack."
+    },
+    {
+      "op": "TRANSFER_TOKENS",
+      "op_args": "TRANSFER_TOKENS",
+      "ty": [
+        {
+          "name": "t_instr_TRANSFER_TOKENS",
+          "premises": [],
+          "conclusion": "ctx :- TRANSFER_TOKENS :: ty1 : mutez : contract ty1 : A => operation : A"
+        }
+      ],
+      "semantics": [
+        {
+          "name": "bs_TRANSFER_TOKENS",
+          "premises": [],
+          "conclusion": "TRANSFER_TOKENS / x : z : s : S => transfer_tokens x z s : S"
+        }
+      ],
+      "category": "blockchain",
+      "documentation_short": "Push a transaction operation",
+      "documentation": "The ``TRANSFER_TOKENS`` instruction consumes a value ``v`` of type ``ty1``,\nan amount ``a`` in ``mutez`` and a contract ``c`` of type ``contract ty1``. It returns\na transfer operation that will send ``a`` mutez to the\nspecified contract ``c`` with the parameter ``v``.\n\nConsequently, the parameter value must be consistent with the\nparameter type of the contract. In the case the contract is an\nimplicit account, then the parameter must be of type ``unit``.\n"
+    },
+    {
+      "op": "UNIT",
+      "op_args": "UNIT",
+      "ty": [
+        {
+          "name": "t_instr_UNIT",
+          "premises": [],
+          "conclusion": "ctx :- UNIT :: A => unit : A"
+        }
+      ],
+      "semantics": [
+        {
+          "name": "bs_UNIT",
+          "premises": [],
+          "conclusion": "UNIT / S => Unit : S"
+        }
+      ],
+      "category": "data_structure",
+      "documentation_short": "Push the unit value onto the stack"
+    },
+    {
+      "op": "UNPACK",
+      "op_args": "UNPACK ty1",
+      "ty": [
+        {
+          "name": "t_instr_UNPACK",
+          "premises": [],
+          "conclusion": "ctx :- UNPACK ty1 :: bytes : A => option ty1 : A"
+        }
+      ],
+      "semantics": [
+        {
+          "name": "bs_UNPACK",
+          "premises": [],
+          "conclusion": "UNPACK ty / byt : S => unpack ty byt : S"
+        }
+      ],
+      "category": "data_structure",
+      "documentation_short": "Deserialize data, if valid",
+      "documentation": "Deserialize a value of type ``bytes`` into the corresponding\nMichelson value of type ``option ty1``.\nIf the top of the stack is not the serialization of a Michelson\nvalue of type ``ty1``, then ``None`` is pushed.\nOtherwise, ``Some v`` is pushed, where ``v`` is the deserialized value.\n",
+      "examples": [
+        {
+          "name": "``UNPACK`` reverses ``PACK``",
+          "description": "This example takes a tuple with a member of each comparable\ntype, packs and unpacks each member and asserts that the\nresulting value is unchanged.\n",
+          "path": "opcodes/packunpack_rev.tz",
+          "input": "(Pair -1  (Pair 1 (Pair \"foobar\" (Pair 0x00AABBCC (Pair 1000 (Pair False (Pair \"tz1cxcwwnzENRdhe2Kb8ZdTrdNy4bFNyScx5\" (Pair \"2019-09-09T08:35:33Z\" \"tz1cxcwwnzENRdhe2Kb8ZdTrdNy4bFNyScx5\"))))))))",
+          "initial_storage": "Unit",
+          "final_storage": "Unit"
+        }
+      ]
+    },
+    {
+      "op": "UPDATE",
+      "op_args": "UPDATE",
+      "ty": [
+        {
+          "name": "t_instr_UPDATE__set",
+          "premises": [],
+          "conclusion": "ctx :- UPDATE :: cty : bool : set cty : A => set cty : A"
+        },
+        {
+          "name": "t_instr_UPDATE__map",
+          "premises": [],
+          "conclusion": "ctx :- UPDATE :: kty : option vty : map kty vty : A => map kty vty : A"
+        },
+        {
+          "name": "t_instr_UPDATE__big_map",
+          "premises": [],
+          "conclusion": "ctx :- UPDATE :: kty : option vty : big_map kty vty : A => big_map kty vty : A"
+        }
+      ],
+      "semantics": [
+        {
+          "name": "bs_UPDATE__set_false",
+          "premises": [],
+          "conclusion": "UPDATE / x : False : {} : S => {} : S"
+        },
+        {
+          "name": "bs_UPDATE__set_add_nexists",
+          "premises": [],
+          "conclusion": "UPDATE / x : True : {} : S => { x } : S"
+        },
+        {
+          "name": "bs_UPDATE__set_cont",
+          "premises": [
+            "COMPARE / x : d : [] => 1 : []",
+            "UPDATE / x : b : tl : S => tl' : S"
+          ],
+          "conclusion": "UPDATE / x : b : { y ; < tl > } : S => { y ; < tl' > } : S"
+        },
+        {
+          "name": "bs_UPDATE__set_remove",
+          "premises": [
+            "COMPARE / x : y : [] => 0 : []"
+          ],
+          "conclusion": "UPDATE / x : False : { y ; < tl > } : S => tl : S"
+        },
+        {
+          "name": "bs_UPDATE__set_exists",
+          "premises": [
+            "COMPARE / x : y : [] => 0 : []"
+          ],
+          "conclusion": "UPDATE / x : True : { y ; < tl > } : S => { y ; < tl > } : S"
+        },
+        {
+          "name": "bs_UPDATE__set_remove_nexists",
+          "premises": [
+            "COMPARE / x : y : [] => - 1 : []"
+          ],
+          "conclusion": "UPDATE / x : False : { y ; < tl > } : S => { y ; < tl > } : S"
+        },
+        {
+          "name": "bs_UPDATE__set_add",
+          "premises": [
+            "COMPARE / x : y : [] => - 1 : []"
+          ],
+          "conclusion": "UPDATE / x : True : { y ; < tl > } : S => { x ; < { y ; < tl > } > } : S"
+        },
+        {
+          "name": "bs_UPDATE__map_false",
+          "premises": [],
+          "conclusion": "UPDATE / x : None : {} : S => {} : S"
+        },
+        {
+          "name": "bs_UPDATE__map_add_nexists",
+          "premises": [],
+          "conclusion": "UPDATE / x : Some y : {} : S => { Elt x y } : S"
+        },
+        {
+          "name": "bs_UPDATE__map_cont",
+          "premises": [
+            "COMPARE / x : k : [] => 1 : []",
+            "UPDATE / x : opt_y : m : S => m' : S"
+          ],
+          "conclusion": "UPDATE / x : opt_y : { Elt k v ; < m > } : S => { Elt k v ; < m' > } : S"
+        },
+        {
+          "name": "bs_UPDATE__map_remove",
+          "premises": [
+            "COMPARE / x : k : [] => 0 : []"
+          ],
+          "conclusion": "UPDATE / x : None : { Elt k v ; < m > } : S => m : S"
+        },
+        {
+          "name": "bs_UPDATE__map_exists",
+          "premises": [
+            "COMPARE / x : k : [] => 0 : []"
+          ],
+          "conclusion": "UPDATE / x : Some y : { Elt k v ; < m > } : S => { Elt k y ; < m > } : S"
+        },
+        {
+          "name": "bs_UPDATE__map_remove_nexists",
+          "premises": [
+            "COMPARE / x : k : [] => - 1 : []"
+          ],
+          "conclusion": "UPDATE / x : None : { Elt k v ; < m > } : S => { Elt k v ; < m > } : S"
+        },
+        {
+          "name": "bs_UPDATE__map_add",
+          "premises": [
+            "COMPARE / x : k : [] => - 1 : []"
+          ],
+          "conclusion": "UPDATE / x : Some y : { Elt k v ; < m > } : S => { Elt x y ; < { Elt k v ; < m > } > } : S"
+        }
+      ],
+      "category": "data_structure",
+      "documentation_short": "Add or remove an element in a ``map``, ``big_map`` or ``set``",
+      "documentation": "For values of type ``map`` and ``big_map``, the instruction ``UPDATE`` consumes\na key, an optional value and a value of type ``map`` or ``big_map``.\nIt returns the same map, but updated in the following way:\n\n  - If the value is ``Some x`` then key is assigned to ``x`` in\n    the resulting map.\n  - If the value is ``None`` and the key is present in the map,\n    then it is removed in the resulting map. If the key is not\n    present, an unmodified map is returned.\n\nFor values of type ``set``, the instruction ``UPDATE`` consumes\na value ``v``, a boolean flag ``b`` and a set ``s``.  It returns the same set,\nbut updated in the following way:\n\n  - If ``b`` is ``True`` then the value ``v`` is added to the set ``s``.\n    If ``v`` was already present in ``s``, then the original set is returned.\n  - If ``b`` is ``False`` then the value ``v`` is removed from ``s``.\n    If ``v`` is not present in ``s``, then the original set is returned.\n"
+    },
+    {
+      "op": "XOR",
+      "op_args": "XOR",
+      "ty": [
+        {
+          "name": "t_instr_XOR__bool",
+          "premises": [],
+          "conclusion": "ctx :- XOR :: bool : bool : A => bool : A"
+        },
+        {
+          "name": "t_instr_XOR__nat",
+          "premises": [],
+          "conclusion": "ctx :- XOR :: nat : nat : A => nat : A"
+        }
+      ],
+      "semantics": [
+        {
+          "name": "bs_XOR__1",
+          "premises": [],
+          "conclusion": "XOR / True : True : S => False : S"
+        },
+        {
+          "name": "bs_XOR__2",
+          "premises": [],
+          "conclusion": "XOR / False : True : S => True : S"
+        },
+        {
+          "name": "bs_XOR__3",
+          "premises": [],
+          "conclusion": "XOR / True : False : S => True : S"
+        },
+        {
+          "name": "bs_XOR__4",
+          "premises": [],
+          "conclusion": "XOR / False : False : S => False : S"
+        },
+        {
+          "name": "bs_XOR__bit",
+          "premises": [],
+          "conclusion": "XOR / z1 : z2 : S => ( z1 ^ z2 ) : S"
+        }
+      ],
+      "category": "logic",
+      "documentation_short": "Boolean and bitwise eXclusive OR",
+      "documentation": "The instruction ``XOR`` is defined on boolean and natural number operands.\nIn the former case, the result is the logical XOR of the operands.\nIn the latter case, the result is the bitwise XOR of the operands.\n"
+    },
+    {
+      "op": "SEQ",
+      "op_args": "code1 ; code2",
+      "ty": [
+        {
+          "name": "t_instr_SEQ",
+          "premises": [
+            "ctx :- code1 :: A => B",
+            "ctx :- code2 :: B => C"
+          ],
+          "conclusion": "ctx :- code1 ; code2 :: A => C"
+        }
+      ],
+      "semantics": [
+        {
+          "name": "bs_SEQ",
+          "premises": [
+            "i1 / S => SE'",
+            "i2 / SE' => SE"
+          ],
+          "conclusion": "i1 ; i2 / S => SE"
+        }
+      ],
+      "category": "control_structure",
+      "documentation_short": "Instruction sequence"
+    },
+    {
+      "op": "NOOP",
+      "op_args": "{}",
+      "ty": [
+        {
+          "name": "t_instr_NOOP",
+          "premises": [],
+          "conclusion": "ctx :- {} :: A => A"
+        }
+      ],
+      "semantics": [
+        {
+          "name": "bs_NOOP",
+          "premises": [],
+          "conclusion": "{} / S => S"
+        }
+      ],
+      "category": "control_structure",
+      "documentation_short": "Empty instruction sequence"
+    }
+  ],
+  "types": [
+    {
+      "ty": "address",
+      "ty_args": "address",
+      "related_ops": [
+        "ADDRESS",
+        "CONTRACT",
+        "CREATE_CONTRACT",
+        "SENDER",
+        "SOURCE"
+      ],
+      "documentation_short": "Address of an untyped contract",
+      "comparable": true,
+      "pushable": true,
+      "passable": true,
+      "storable": true,
+      "packable": true,
+      "unpackable": false,
+      "examples": [
+        "\"KT1ThEdxfUcWUwqsdergy3QnbCWGHSUHeHJq\"",
+        "\"KT1BEqzn5Wx8uJrZNvuS9DVHmLvG9td3fDLi%entrypoint\"",
+        "\"tz1KqTpEZ7Yob7QbPE4Hy4Wo8fHG8LhKxZSx\"",
+        "\"tz2VGBaXuS6rnaa5hpC92qkgadRJKdEbeGwc\"",
+        "\"tz3WEJYwJ6pPwVbSL8FrSoAXRmFHHZTuEnMA\""
+      ],
+      "insertions": [],
+      "big_map_value": true,
+      "documentation": "The ``address`` type merely gives the guarantee that the value\nhas the form of a Tezos address, as opposed to ``contract``\nthat guarantees that the value is indeed a valid, existing\naccount.\n\nA valid Tezos address is a string prefixed by either ``tz1``,\n``tz2``, ``tz3`` or ``KT1`` and followed by a Base58 encoded\nhash and terminated by a 4-byte checksum.\n\nThe prefix designates the type of address:\n\n- ``tz1`` addresses are followed by a ed25519 public key hash\n- ``tz2`` addresses are followed by a Secp256k1 public key hash\n- ``tz3`` addresses are followed by a NIST p256r1 public key hash\n- ``KT1`` addresses are followed by a contract hash\n\nAddresses prefixed by ``tz1``, ``tz2`` and ``tz3`` designate\nimplicit accounts, whereas those prefixed ``KT1`` designate\noriginated accounts.\n\nFinally, addresses can specify an entrypoint, with a\n``%entrypoint`` suffix.\n"
+    },
+    {
+      "ty": "big_map",
+      "ty_args": "big_map kty vty",
+      "related_ops": [
+        "EMPTY_BIG_MAP",
+        "GET",
+        "MEM",
+        "UPDATE"
+      ],
+      "documentation_short": "A lazily deserialized map from ``kty`` to ``vty``",
+      "comparable": false,
+      "pushable": false,
+      "passable": true,
+      "storable": true,
+      "packable": false,
+      "unpackable": false,
+      "examples": [
+        [
+          "{}",
+          "big_map nat bytes"
+        ],
+        [
+          "{ Elt 0 0xCB ; Elt 1 0xAB }",
+          "big_map nat bytes"
+        ]
+      ],
+      "insertions": [],
+      "big_map_value": false,
+      "documentation": "Lazily deserialized maps from keys of type ``kty`` of values of\ntype ``vty`` that we note ``{ Elt key value ; ... }``, with keys\nsorted.  These maps should be used if you intend to store large\namounts of data in a map. Operations on ``big_map``\\ s have\nhigher gas costs than those over standard maps, as data is\nlazily deserialized. However, a ``big_map`` has a lower\nstorage cost than a standard map of the same size.\n\nThe behavior of ``GET``, ``UPDATE`` and ``MEM`` is the same on\n``big_map``\\ s as on standard maps, except that under\nthe hood, elements are loaded and deserialized on demand.\n\nLiteral ``big_map``\\ s cannot be pushed directly in contract\ncode. Instead, they must be created using ``EMPTY_BIG_MAP`` and\nmanipulated using ``GET``, ``UPDATE`` and ``MEM``. However,\nliteral ``big_map``\\ s are used when originating and calling\ncontracts using ``tezos-client``.\n\nValues of the ``big_map`` type cannot be serialized using ``PACK``.\n"
+    },
+    {
+      "ty": "bool",
+      "ty_args": "bool",
+      "related_ops": [
+        "AND",
+        "CHECK_SIGNATURE",
+        "EQ",
+        "GE",
+        "GT",
+        "IF",
+        "LE",
+        "LOOP",
+        "LT",
+        "MEM",
+        "NEQ",
+        "NOT",
+        "OR",
+        "UPDATE",
+        "XOR"
+      ],
+      "documentation_short": "A boolean",
+      "comparable": true,
+      "pushable": true,
+      "passable": true,
+      "storable": true,
+      "packable": true,
+      "unpackable": false,
+      "examples": [
+        "True",
+        "False"
+      ],
+      "insertions": [],
+      "big_map_value": true,
+      "documentation": "The type for booleans whose values are ``True`` and ``False``.\n"
+    },
+    {
+      "ty": "bytes",
+      "ty_args": "bytes",
+      "related_ops": [
+        "BLAKE2B",
+        "CHECK_SIGNATURE",
+        "CONCAT",
+        "PACK",
+        "SHA256",
+        "SHA512",
+        "SIZE",
+        "SLICE",
+        "UNPACK"
+      ],
+      "documentation_short": "A sequence of bytes",
+      "comparable": true,
+      "pushable": true,
+      "passable": true,
+      "storable": true,
+      "packable": true,
+      "unpackable": false,
+      "examples": [
+        "0x",
+        "0xABCDEF42"
+      ],
+      "insertions": [],
+      "big_map_value": true
+    },
+    {
+      "ty": "chain_id",
+      "ty_args": "chain_id",
+      "related_ops": [
+        "CHAIN_ID"
+      ],
+      "documentation_short": "A chain identifier",
+      "comparable": false,
+      "pushable": true,
+      "passable": true,
+      "storable": true,
+      "packable": true,
+      "unpackable": false,
+      "examples": [
+        "0x7a06a770"
+      ],
+      "insertions": [],
+      "big_map_value": true,
+      "documentation": "An identifier for a chain, used to distinguish the test and the\nmain chains.\n\nThe value is derived from the genesis block hash and will thus\nbe different on the main chains of different networks and on the\ntest chains for which the value depends on the first block of the\ntestchain.\n"
+    },
+    {
+      "ty": "contract",
+      "ty_args": "contract type",
+      "related_ops": [
+        "ADDRESS",
+        "CONTRACT",
+        "IMPLICIT_ACCOUNT",
+        "SELF",
+        "TRANSFER_TOKENS"
+      ],
+      "documentation_short": "Address of a contract, where `type` is the contract's parameter type",
+      "comparable": false,
+      "pushable": false,
+      "passable": true,
+      "storable": false,
+      "packable": true,
+      "unpackable": false,
+      "examples": [],
+      "insertions": [
+        "contract nat"
+      ],
+      "literal": false,
+      "big_map_value": true,
+      "documentation": "A value of type ``contract t`` is guaranteed to be a valid, existing account whose parameter type is ``t``.  This can be opposed to the ``address`` type, that merely gives the guarantee that the value has the form of a Tezos address.\nValues of the ``contract`` type cannot be stored. There are not literal values of type contract. Instead, such values are created using instructions such as ``CONTRACT`` or ``IMPLICIT_ACCOUNT``."
+    },
+    {
+      "ty": "int",
+      "ty_args": "int",
+      "related_ops": [
+        "ABS",
+        "ADD",
+        "AND",
+        "COMPARE",
+        "EDIV",
+        "EQ",
+        "GE",
+        "GT",
+        "INT",
+        "ISNAT",
+        "LE",
+        "LT",
+        "MUL",
+        "NEG",
+        "NEQ",
+        "NOT",
+        "SUB"
+      ],
+      "documentation_short": "An arbitrary-precision integer",
+      "comparable": true,
+      "pushable": true,
+      "passable": true,
+      "storable": true,
+      "packable": true,
+      "unpackable": false,
+      "examples": [
+        -99999,
+        -1,
+        0,
+        1,
+        99999
+      ],
+      "insertions": [],
+      "big_map_value": true
+    },
+    {
+      "ty": "key",
+      "ty_args": "key",
+      "related_ops": [
+        "CHECK_SIGNATURE",
+        "HASH_KEY"
+      ],
+      "documentation_short": "A public cryptography key",
+      "comparable": false,
+      "pushable": true,
+      "passable": true,
+      "storable": true,
+      "packable": true,
+      "unpackable": false,
+      "examples": [
+        "\"edpkuBknW28nW72KG6RoHtYW7p12T6GKc7nAbwYX5m8Wd9sDVC9yav\"",
+        "\"edpkuJqtDcA2m2muMxViSM47MPsGQzmyjnNTawUPqR8vZTAMcx61ES\""
+      ],
+      "insertions": [],
+      "big_map_value": true
+    },
+    {
+      "ty": "key_hash",
+      "ty_args": "key_hash",
+      "related_ops": [
+        "CREATE_CONTRACT",
+        "HASH_KEY",
+        "IMPLICIT_ACCOUNT",
+        "SET_DELEGATE"
+      ],
+      "documentation_short": "A hash of a public cryptography key",
+      "comparable": true,
+      "pushable": true,
+      "passable": true,
+      "storable": true,
+      "packable": true,
+      "unpackable": false,
+      "examples": [
+        "\"tz1KqTpEZ7Yob7QbPE4Hy4Wo8fHG8LhKxZSx\"",
+        "\"tz1XPTDmvT3vVE5Uunngmixm7gj7zmdbPq6k\""
+      ],
+      "insertions": [],
+      "big_map_value": true
+    },
+    {
+      "ty": "lambda",
+      "ty_args": "lambda ty1 ty2",
+      "related_ops": [
+        "APPLY",
+        "EXEC",
+        "LAMBDA"
+      ],
+      "documentation_short": "A lambda with given parameter and return types",
+      "comparable": false,
+      "pushable": true,
+      "passable": true,
+      "storable": true,
+      "packable": true,
+      "unpackable": false,
+      "examples": [
+        [
+          "{ }",
+          "lambda unit unit"
+        ],
+        [
+          "{ PUSH nat 1; ADD }",
+          "lambda nat nat"
+        ]
+      ],
+      "insertions": [],
+      "big_map_value": true
+    },
+    {
+      "ty": "list",
+      "ty_args": "list type",
+      "related_ops": [
+        "CONCAT",
+        "CONS",
+        "IF_CONS",
+        "ITER",
+        "MAP",
+        "NIL",
+        "SIZE"
+      ],
+      "documentation_short": "A single, immutable, homogeneous linked list",
+      "comparable": false,
+      "pushable": true,
+      "passable": true,
+      "storable": true,
+      "packable": true,
+      "unpackable": false,
+      "examples": [
+        [
+          "{}",
+          "list unit"
+        ],
+        [
+          "{ 0 ; 10 }",
+          "list nat"
+        ],
+        [
+          "{ Some 10 ; None }",
+          "list (option int)"
+        ]
+      ],
+      "insertions": [],
+      "big_map_value": true,
+      "documentation": "A single, immutable, homogeneous linked list, whose elements are\nof type ``type``, and that we note ``{}`` for the empty list or\n``{ first ; ... }``. In the semantics, we use the less-than and\ngreater-than sign (< and >) to denote a subsequence of\nelements. For instance ``{ head ; <tail> }``.\n"
+    },
+    {
+      "ty": "map",
+      "ty_args": "map kty vty",
+      "related_ops": [
+        "EMPTY_MAP",
+        "GET",
+        "ITER",
+        "MAP",
+        "MEM",
+        "SIZE",
+        "UPDATE"
+      ],
+      "documentation_short": "An immutable map from ``kty`` to ``vty``",
+      "comparable": false,
+      "pushable": true,
+      "passable": true,
+      "storable": true,
+      "packable": true,
+      "unpackable": false,
+      "examples": [
+        [
+          "{}",
+          "map nat unit"
+        ],
+        [
+          "{ Elt 0 0xCB ; Elt 1 0xAB }",
+          "map nat bytes"
+        ]
+      ],
+      "insertions": [],
+      "big_map_value": true,
+      "documentation": "Immutable maps from keys of type ``kty`` and values of type\n``vty`` that we note ``{ Elt key value ; ... }``, with keys\nsorted.\n"
+    },
+    {
+      "ty": "mutez",
+      "ty_args": "mutez",
+      "related_ops": [
+        "ADD",
+        "AMOUNT",
+        "BALANCE",
+        "CREATE_CONTRACT",
+        "EDIV",
+        "MUL",
+        "SUB",
+        "TRANSFER_TOKENS"
+      ],
+      "documentation_short": "A specific type for manipulating tokens",
+      "comparable": true,
+      "pushable": true,
+      "passable": true,
+      "storable": true,
+      "packable": true,
+      "unpackable": false,
+      "examples": [
+        0,
+        1,
+        99999
+      ],
+      "insertions": [],
+      "big_map_value": true
+    },
+    {
+      "ty": "nat",
+      "ty_args": "nat",
+      "related_ops": [
+        "ABS",
+        "ADD",
+        "AND",
+        "EDIV",
+        "INT",
+        "ISNAT",
+        "LSL",
+        "LSR",
+        "MUL",
+        "NEG",
+        "NOT",
+        "OR",
+        "SIZE",
+        "SLICE",
+        "SUB",
+        "XOR"
+      ],
+      "documentation_short": "An arbitrary-precision natural number",
+      "comparable": true,
+      "pushable": true,
+      "passable": true,
+      "storable": true,
+      "packable": true,
+      "unpackable": false,
+      "examples": [
+        0,
+        1,
+        99999
+      ],
+      "insertions": [],
+      "big_map_value": true
+    },
+    {
+      "ty": "operation",
+      "ty_args": "operation",
+      "related_ops": [
+        "CREATE_CONTRACT",
+        "SET_DELEGATE",
+        "TRANSFER_TOKENS"
+      ],
+      "documentation_short": "An internal operation emitted by a contract",
+      "comparable": false,
+      "pushable": false,
+      "passable": false,
+      "storable": false,
+      "packable": false,
+      "unpackable": false,
+      "examples": [],
+      "insertions": [],
+      "big_map_value": false,
+      "documentation": "There are no literal values of type ``operation``. Instead, such values are created using the instructions ``TRANSFER_TOKEN``, ``SET_DELEGATE`` and ``CREATE_ACCOUNT``."
+    },
+    {
+      "ty": "option",
+      "ty_args": "option type",
+      "related_ops": [
+        "CONTRACT",
+        "CREATE_CONTRACT",
+        "EDIV",
+        "GET",
+        "IF_NONE",
+        "ISNAT",
+        "NONE",
+        "SET_DELEGATE",
+        "SLICE",
+        "SOME",
+        "UNPACK",
+        "UPDATE"
+      ],
+      "documentation_short": "An optional value",
+      "comparable": false,
+      "pushable": true,
+      "passable": true,
+      "storable": true,
+      "packable": true,
+      "unpackable": false,
+      "examples": [
+        [
+          "None",
+          "option unit"
+        ],
+        [
+          "Some \"foo\"",
+          "option string"
+        ]
+      ],
+      "insertions": [],
+      "big_map_value": true,
+      "documentation": "Optional value of type ``vty`` that we note ``None`` or ``(Some v)``.\n"
+    },
+    {
+      "ty": "or",
+      "ty_args": "or ty1 ty2",
+      "related_ops": [
+        "IF_LEFT",
+        "LEFT",
+        "LOOP_LEFT",
+        "RIGHT"
+      ],
+      "documentation_short": "A union of two types",
+      "comparable": false,
+      "pushable": true,
+      "passable": true,
+      "storable": true,
+      "packable": true,
+      "unpackable": false,
+      "examples": [
+        [
+          "(Left True)",
+          "or bool string"
+        ],
+        [
+          "(Right \"foo\")",
+          "or bool string"
+        ]
+      ],
+      "insertions": [],
+      "big_map_value": true,
+      "documentation": "A union of two types: a value holding either a value ``a`` of\ntype ``ty1`` or a value ``b`` of type ``ty2``, that we write\n``(Left a)`` or ``(Right b)``.\n"
+    },
+    {
+      "ty": "pair",
+      "ty_args": "pair ty1 ty2",
+      "related_ops": [
+        "APPLY",
+        "CAR",
+        "CDR",
+        "EDIV",
+        "PAIR"
+      ],
+      "documentation_short": "A pair of values",
+      "comparable": true,
+      "pushable": true,
+      "passable": true,
+      "storable": true,
+      "packable": true,
+      "unpackable": false,
+      "examples": [
+        [
+          "(Pair 0 True)",
+          "pair int bool"
+        ]
+      ],
+      "insertions": [],
+      "big_map_value": true,
+      "documentation": "A pair of values ``a`` and\n``b`` of types ``ty1`` and ``ty2``, that we write ``(Pair a\nb)``.\n\nPairs are comparable under the restriction that the left component does not itself contain a pair. For example the following values are comparable:\n  - ``Pair 10 \"foo\"``\n  - ``Pair \"foo\" (Pair \"bar\" \"baz\")``\n  - ``Pair True (Pair \"bar\" (Pair 10 -5))``\n\nOn the other hand, these values are not comparable:\n  - ``Pair (Pair \"bar\" \"baz\") \"foo\"``\n  - ``Pair \"foo\" (Pair (Pair \"bar\" \"baz\") \"baz\")``\n"
+    },
+    {
+      "ty": "set",
+      "ty_args": "set cty",
+      "related_ops": [
+        "EMPTY_SET",
+        "ITER",
+        "MEM",
+        "SIZE",
+        "UPDATE"
+      ],
+      "documentation_short": "An immutable set of comparable values of type ``cty``",
+      "comparable": false,
+      "pushable": true,
+      "passable": true,
+      "storable": true,
+      "packable": true,
+      "unpackable": false,
+      "examples": [
+        [
+          "{}",
+          "set bool"
+        ],
+        [
+          "{ 0 ; 3 ; 4 }",
+          "set nat"
+        ]
+      ],
+      "insertions": [],
+      "big_map_value": true,
+      "documentation": "Immutable sets of comparable values of type ``cty`` that we note\nas lists ``{ item ; ... }``, of course with their elements\nunique, and sorted.\n"
+    },
+    {
+      "ty": "signature",
+      "ty_args": "signature",
+      "related_ops": [
+        "CHECK_SIGNATURE"
+      ],
+      "documentation_short": "A cryptographic signature",
+      "comparable": false,
+      "pushable": true,
+      "passable": true,
+      "storable": true,
+      "packable": true,
+      "unpackable": false,
+      "examples": [
+        "\"edsigthTzJ8X7MPmNeEwybRAvdxS1pupqcM5Mk4uCuyZAe7uEk68YpuGDeViW8wSXMrCi5CwoNgqs8V2w8ayB5dMJzrYCHhD8C7\"",
+        "\"spsig1PPUFZucuAQybs5wsqsNQ68QNgFaBnVKMFaoZZfi1BtNnuCAWnmL9wVy5HfHkR6AeodjVGxpBVVSYcJKyMURn6K1yknYLm\""
+      ],
+      "insertions": [],
+      "big_map_value": true
+    },
+    {
+      "ty": "string",
+      "ty_args": "string",
+      "related_ops": [
+        "CONCAT",
+        "SIZE",
+        "SLICE"
+      ],
+      "documentation_short": "A string of characters",
+      "comparable": true,
+      "pushable": true,
+      "passable": true,
+      "storable": true,
+      "packable": true,
+      "unpackable": false,
+      "examples": [
+        "\"foo\"",
+        "\"ABC\\n123\""
+      ],
+      "insertions": [],
+      "big_map_value": true,
+      "documentation": "The current version of Michelson restricts strings to be the printable\nsubset of 7-bit ASCII, namely characters with codes from within\n`[32, 126]` range, plus the following escape characters ``\\n``,\n``\\\\``, ``\\\"``. Unescaped line breaks (both ``\\n`` and ``\\r``)\ncannot appear in a string.\n"
+    },
+    {
+      "ty": "timestamp",
+      "ty_args": "timestamp",
+      "related_ops": [
+        "ADD",
+        "NOW",
+        "SUB"
+      ],
+      "documentation_short": "A real-world date",
+      "comparable": true,
+      "pushable": true,
+      "passable": true,
+      "storable": true,
+      "packable": true,
+      "unpackable": false,
+      "examples": [
+        "\"2019-09-26T10:59:51Z\"",
+        "1571659294"
+      ],
+      "insertions": [],
+      "big_map_value": true,
+      "documentation": "Literal ``timestamp``\\ s are written either using ``RFC3339`` notation\nin a string (readable), or as the number of seconds since Epoch in\na natural (optimized).\n"
+    },
+    {
+      "ty": "unit",
+      "ty_args": "unit",
+      "related_ops": [
+        "IMPLICIT_ACCOUNT",
+        "UNIT"
+      ],
+      "documentation_short": "The type whose only value is ``Unit``",
+      "comparable": false,
+      "pushable": true,
+      "passable": true,
+      "storable": true,
+      "packable": true,
+      "unpackable": false,
+      "examples": [
+        "Unit"
+      ],
+      "insertions": [],
+      "big_map_value": true,
+      "documentation": "The type whose only value is ``Unit``, to use as a placeholder\nwhen some result or parameter is non-necessary. For instance,\nwhen the only goal of a contract is to update its storage.\n"
+    }
+  ]
+}

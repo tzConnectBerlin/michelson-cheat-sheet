@@ -98,7 +98,7 @@
       \command{int}{arbitrary precision integer}
       \command{key}{public key}
       \command{key\_hash}{hash of public key}
-      \command{lambda {\texttt ty1 ty2}}{lambda w. given param \& return types}
+      \command{lambda {\texttt ty1 ty2}}{lambda with given param \& return types}
       \command{list {\texttt type}}{single immutable homogenous list}
       \command{map {\texttt ktv vty}}{immutable map from {\texttt kty} to {\texttt vty}}
       \command{mutez}{type for manipulating tokens}
@@ -125,7 +125,6 @@
       \command{AND}{boolean bitwise AND}
       \command{APPLY}{partially apply tuplified fn from stack}
       \command{BALANCE}{push current mutez of contract}
-      \command{BLAKE2B}{compute blake2b hash}
 
 
       %----------------------------------------------------------------------------------------
@@ -143,6 +142,7 @@
       %	HEADING FOUR
       %----------------------------------------------------------------------------------------
       \begin{flushright}
+        \command{BLAKE2B}{compute blake2b hash}
         \command{CAR}{access left part of pair}
         \command{CDR}{access right part of pair}
         \command{CHAIN\_ID}{push chain identifier}
@@ -179,7 +179,6 @@
         \command{LOOP {\texttt code}}{a generic loop}
         \command{LOOP\_LEFT {\texttt code}}{loop with accumulator}
         \command{LSL}{logically shift left a {\texttt nat}}
-        \command{LT}{check top of stack is < 0}
       \end{flushright}
     \end{minipage} % End the second column of text
   } % End the second division of the page
@@ -188,42 +187,43 @@
   \put(200,180){ % Divide the page
     \begin{minipage}[t]{85mm} % Create a box to house tex
       \begin{flushright}
-      \command{MAP {\texttt code}}{apply body to each ele of {\texttt map} or {\texttt list}}
-      \command{MEM}{check for key in {\texttt map}, {\texttt set} or {\texttt big\_map}}
-      \command{MUL}{multiply two numerical values}
-      \command{NEG}{negate a numerical value}
-      \command{NEQ}{check top of stack $\neq$ zero}
-      \command{NIL {\texttt ty1}}{push empty list of type {\texttt ty1}}
-      \command{NONE {\texttt ty1}}{push absent optional value}
-      \command{NOT}{boolean and bitwise complement}
-      \command{NOW}{push block timestamp}
-      \command{OR}{boolean and bitwise OR}
-      \command{PACK}{serialize data}
-      \command{PAIR}{build a pair from the stack's top 2 elements}
-      \command{PUSH {\texttt ty1 x}}{push constant value {\texttt x} of type {\texttt ty1}}
-      \command{RIGHT {\texttt ty1}}{wrap a value in a union (right case)}
-      \command{SELF}{push the current contract}
-      \command{SENDER}{push contract that initiated current internal transaction}
-      \command{SET\_DELEGATE}{push a delegation operation}
-      \command{SHA256}{compute a SHA-256 cryptographic hash}
-      \command{SIZE}{obtain size of a {\texttt string}, {\texttt list}, {\texttt set}, {\texttt map} or byte sequence}
-      \command{SLICE}{obtain sub\{string|sequence\} of string|bytes}
-  \command{SOME}{wrap an existing optional value}
-  \command{SOURCE}{push the contract that initiated the current transaction}
-  \command{SUB}{subtract two numerical values}
-  \command{SWAP}{swap the top two elements of the stack}
-  \command{TRANSFER\_TOKEN}{push a transfer operation}
-  \command{UNIT}{pushes the unit value onto the stack}
-  \command{UNPACK {\texttt ty1}}{deserialize data, if valid}
-  \command{UPDATE}{add or remove an element in}
-  \command{XOR}{boolean and bitwise eXclusive OR}
-  \command{code1; code2}{instruction sequence}
-  \command{.\{\}.}{empty instruction sequence}
-  \end{flushright}
-  %----------------------------------------------------------------------------------------
+        \command{LT}{check top of stack is < 0}
+        \command{MAP {\texttt code}}{apply body to each ele of {\texttt map} or {\texttt list}}
+        \command{MEM}{check for key in {\texttt map}, {\texttt set} or {\texttt big\_map}}
+        \command{MUL}{multiply two numerical values}
+        \command{NEG}{negate a numerical value}
+        \command{NEQ}{check top of stack $\neq$ zero}
+        \command{NIL {\texttt ty1}}{push empty list of type {\texttt ty1}}
+        \command{NONE {\texttt ty1}}{push absent optional value}
+        \command{NOT}{boolean and bitwise complement}
+        \command{NOW}{push block timestamp}
+        \command{OR}{boolean and bitwise OR}
+        \command{PACK}{serialize data}
+        \command{PAIR}{build a pair from the stack's top 2 elements}
+        \command{PUSH {\texttt ty1 x}}{push constant value {\texttt x} of type {\texttt ty1}}
+        \command{RIGHT {\texttt ty1}}{wrap a value in a union (right case)}
+        \command{SELF}{push the current contract}
+        \command{SENDER}{push contract that initiated current internal transaction}
+        \command{SET\_DELEGATE}{push a delegation operation}
+        \command{SHA256}{compute a SHA-256 cryptographic hash}
+        \command{SIZE}{obtain size of a {\texttt string}, {\texttt list}, {\texttt set}, {\texttt map} or byte sequence}
+        \command{SLICE}{obtain sub\{string|sequence\} of string|bytes}
+        \command{SOME}{wrap an existing optional value}
+        \command{SOURCE}{push the contract that initiated the current transaction}
+        \command{SUB}{subtract two numerical values}
+        \command{SWAP}{swap the top two elements of the stack}
+        \command{TRANSFER\_TOKEN}{push a transfer operation}
+        \command{UNIT}{pushes the unit value onto the stack}
+        \command{UNPACK {\texttt ty1}}{deserialize data, if valid}
+        \command{UPDATE}{add or remove an element in}
+        \command{XOR}{boolean and bitwise eXclusive OR}
+        \command{code1; code2}{instruction sequence}
+        \command{.\{\}.}{empty instruction sequence}
+      \end{flushright}
+      %----------------------------------------------------------------------------------------
 
     \end{minipage} % End the third column of text
-    } % End the third division of the page
+  } % End the third division of the page
 \end{picture} % End the container for the entire page
 
 %----------------------------------------------------------------------------------------

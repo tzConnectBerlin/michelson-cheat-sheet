@@ -1,0 +1,149 @@
+\RequirePackage[hyphens]{url}
+\documentclass[10pt]{article}
+\usepackage{microtype}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{underscore}
+\usepackage{multicol}
+\usepackage[landscape,left=0.75cm,right=0.75cm,top=1cm,bottom=1cm]{geometry}
+\usepackage[english]{babel}
+%%\usepackage{minted}
+\usepackage{verbatim}
+\usepackage{fancyvrb} % for "\Verb" macro
+\renewcommand{\dots}{\ \dotfill{}\ } % Fills in the right amount of dots
+
+\newcommand{\command}[2]{#1~\dotfill{}~#2\\} % Custom command for adding a shorcut
+
+\newcommand{\sectiontitle}[1]{\paragraph{#1} \ \\} % Custom command for subsection titles
+
+\pagestyle{empty} % suppress page numbers
+\setlength\columnsep{1cm}
+\makeatletter
+\let\@afterindenttrue\@afterindentfalse
+\makeatother
+
+\begin{document}
+\section*{Michelson Language Cheat Sheet} % Title
+\begin{multicols}{3}
+  \sectiontitle{Type Taxonomy}
+  \noindent
+  \begin{flushright}
+    \command{int, nat, timestamp ,mutez}{numeric}
+    \command{string, bytes}{sequences}
+    \command{list, set, map, big\_map}{structural}
+
+    %----------------------------------------------------------------------------------------
+    %	HEADING TWO
+    %----------------------------------------------------------------------------------------
+  \end{flushright}
+  \sectiontitle{Types}
+  \noindent
+  \command{address}{address of untyped contract}
+  \command{bigmap kty vty}{big map}
+  \command{bool}{{\texttt true} or false}
+  \command{bytes}{sequence of bytes}
+  \command{chain\_id}{chain identifier}
+  \command{contract {\texttt type}}{address of contract w param type {\texttt type}}
+  \command{int}{arbitrary precision integer}
+  \command{key}{public key}
+  \command{key\_hash}{hash of public key}
+  \command{lambda {\texttt ty1 ty2}}{lambda with given param \& return types}
+  \command{list {\texttt type}}{single immutable homogenous list}
+  \command{map {\texttt ktv vty}}{immutable map from {\texttt kty} to {\texttt vty}}
+  \command{mutez}{type for manipulating tokens}
+  \command{nat}{arbitrary precision natural number}
+  \command{operation}{internal operation emitted by contract}
+  \command{option {\texttt type}}{optional value}
+  \command{or {\texttt ty1 ty2}}{union of two types}
+  \command{pair {\texttt ty1 ty2}}{pair of two values}
+  \command{set {\texttt cty}}{immutable set of comparable {\texttt cty}s}
+  \command{signature}{cryptographic signature}
+  \command{string}{string of characters}
+  \command{timestamp}{real-world date}
+  \command{unit}{the type whose only value is {\texttt unit}}
+
+
+  \sectiontitle{Instructions}
+  \begin{flushright}
+    \noindent
+    \command{ABS}{absolute value of integer}
+    \command{ADD}{add two numerical values}
+    \command{ADDRESS}{push the address of a contract}
+    \command{AMOUNT}{push amount of current tx}
+    \command{AND}{boolean bitwise AND}
+    \command{APPLY}{partially apply tuplified fn from stack}
+    \command{BALANCE}{push current mutez of contract}
+    \command{BLAKE2B}{compute blake2b hash}
+    \command{CAR}{access left part of pair}
+    \command{CDR}{access right part of pair}
+    \command{CHAIN\_ID}{push chain identifier}
+    \command{CHECK\_SIGNATURE}{verify {\texttt signature} of {\texttt bytes} of {\texttt key}}
+    \command{COMPARE}{compare two values}
+    \command{CONCAT}{concatenate string, byte sequence, string list or sequence list}
+    \command{CONS}{prepend element to list}
+    \command{CONTRACT {\texttt ty}}{cast address to typed contract}
+    \command{CREATE\_CONTRACT {\texttt ty1 ty2 code}}{push contract creation operation}
+    \command{DIG {\texttt n}}{retrieve {\texttt n}th element of stack}
+    \command{DIP {\texttt n code}}{run code protecting top of stack}
+    \command{DROP {\texttt n}}{drop the top {\texttt n} elements of stack}
+    \command{DUG {\texttt n}}{insert top element at depth {\texttt n}}
+    \command{DUP}{duplicate top of stack}
+    \command{EDIV}{Euclidian division}
+    \command{EMPTY\_BIG\_MAP {\texttt kty vty}}{new empty {\texttt big map} from {\texttt kty} to {\texttt vty}}
+    \command{EQ}{check that top of stack {\texttt EQ}uals zero}
+    \command{EXEC}{execute function from stack}
+    \command{FAILWITH}{abort current program}
+    \command{GE}{check top of stack $\geq$ zero}
+    \command{GET}{access element in {\texttt map} or {\texttt big\_map}}
+    \command{HASH\_KEY}{compute {\texttt base58check} of pub key}
+    \command{IF {\texttt code1 code2}}{conditional branching}
+    \command{IF\_CONS}{inspect a list}
+    \command{IF\_LEFT}{inspect value of a union}
+    \command{IF\_NONE}{inspect optional value}
+    \command{IMPLICIT\_ACCOUNT}{create an implicit account}
+    \command{INT}{convert {\texttt nat} to {\texttt int}}
+    \command{ISNAT}{convert non-negative {\texttt int} to {\texttt nat}}
+    \command{ITER {\texttt code}}{iterate over {\\texttt set list} or {\texttt map}}
+    \command{LAMBDA {\texttt ty1 ty2 code}}{push a lambda onto stack}
+    \command{LE}{check that top value on stack $\leq$ 0}
+    \command{LEFT {\texttt ty2}}{wrap a value in a union (left case)}
+    \command{LOOP {\texttt code}}{a generic loop}
+    \command{LOOP\_LEFT {\texttt code}}{loop with accumulator}
+    \command{LSL}{logically shift left a {\texttt nat}}
+    \command{LT}{check top of stack is < 0}
+    \command{MAP {\texttt code}}{apply body to each ele of {\texttt map} or {\texttt list}}
+    \command{MEM}{check for key in {\texttt map}, {\texttt set} or {\texttt big\_map}}
+    \command{MUL}{multiply two numerical values}
+    \command{NEG}{negate a numerical value}
+    \command{NEQ}{check top of stack $\neq$ zero}
+    \command{NIL {\texttt ty1}}{push empty list of type {\texttt ty1}}
+    \command{NONE {\texttt ty1}}{push absent optional value}
+    \command{NOT}{boolean and bitwise complement}
+    \command{NOW}{push block timestamp}
+    \command{OR}{boolean and bitwise OR}
+    \command{PACK}{serialize data}
+    \command{PAIR}{build a pair from the stack's top 2 elements}
+    \command{PUSH {\texttt ty1 x}}{push constant value {\texttt x} of type {\texttt ty1}}
+    \command{RIGHT {\texttt ty1}}{wrap a value in a union (right case)}
+    \command{SELF}{push the current contract}
+    \command{SENDER}{push contract that initiated current internal transaction}
+    \command{SET\_DELEGATE}{push a delegation operation}
+    \command{SHA256}{compute a SHA-256 cryptographic hash}
+    \command{SIZE}{obtain size of a {\texttt string}, {\texttt list}, {\texttt set}, {\texttt map} or byte sequence}
+    \command{SLICE}{obtain sub\{string|sequence\} of string|bytes}
+    \command{SOME}{wrap an existing optional value}
+    \command{SOURCE}{push the contract that initiated the current transaction}
+    \command{SUB}{subtract two numerical values}
+    \command{SWAP}{swap the top two elements of the stack}
+    \command{TRANSFER\_TOKEN}{push a transfer operation}
+    \command{UNIT}{pushes the unit value onto the stack}
+    \command{UNPACK {\texttt ty1}}{deserialize data, if valid}
+    \command{UPDATE}{add or remove an element in}
+    \command{XOR}{boolean and bitwise eXclusive OR}
+    \command{code1; code2}{instruction sequence}
+    \command{.\{\}.}{empty instruction sequence}
+  \end{flushright}
+\end{multicols}
+\include{instructions}
+
+\end{document}

@@ -1,5 +1,6 @@
 #require "core";;
 open Core_kernel;;
+open Printf;;
 #require "yojson";;
 open Yojson;;
 
@@ -29,21 +30,36 @@ let handle_ty = fun ty ->
                      sprintf "%s|"
                        (minted (json_str_element "conclusion" x)))));;
 
-let handle_instruction = fun instr ->
+let handle_instruction_detail = fun instr ->
   let op = json_str_element "op" instr in
   let ty = json_list_element "ty" instr in
-  printf {|
+  sprintf {|
   \textbf{%s} %s|} op (handle_ty ty)
 ;;
 
+let handle_instruction = fun instr ->
+  let op = json_str_element "op" instr in
+  let description = json_str_element "documentation_short" instr in
+  sprintf {|\command{%s}{%s} |} op description;;
+
 let instructions = json_list_element "instructions" json;;
 
-printf{|
+let header = sprintf{|
   \noindent\sectiontitle{Instructions (detail)}
   \raggedright
 
-  \small\noindent|}
+  \small\noindent|};;
+
 let sorted = List.sort instructions (fun x y ->
   String.compare (json_str_element "op" x) (json_str_element "op" y));;
 
-List.map sorted (fun x -> handle_instruction x);;
+let instruction_details_lines = List.map sorted (fun x -> handle_instruction_detail x);;
+let instructions_lines = List.map sorted (fun x -> handle_instruction x);;
+
+let instructions_detail = "instructions-detail.tex";;
+
+let oc = open_out instructions_detail in
+fprintf oc "%s %s" header (String.concat (List.map instruction_details_lines (fun x -> sprintf "%s" x)));;
+
+let oc = open_out "instructions.tex" in
+fprintf oc "%s" (String.concat instructions_lines)

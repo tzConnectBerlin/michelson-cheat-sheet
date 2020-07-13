@@ -31,7 +31,6 @@ let handle_ty = fun ty ->
 
 let handle_instruction = fun instr ->
   let op = json_str_element "op" instr in
-  let op_args = json_str_element "op_args" instr in
   let ty = json_list_element "ty" instr in
   printf {|
   \textbf{%s} %s|} op (handle_ty ty)

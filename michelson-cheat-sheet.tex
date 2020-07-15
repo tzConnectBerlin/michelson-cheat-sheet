@@ -23,6 +23,7 @@
 \makeatother
 
 \begin{document}
+\setlength\topsep{0pt}\setlength\partopsep{0pt}\setlength\parskip{0pt}
 \section*{Michelson Language Cheat Sheet}
 \begin{multicols}{3}
   \sectiontitle{Type taxonomy}\noindent\begin{raggedright}
@@ -55,7 +56,7 @@
   \command{string}{string of characters}
   \command{timestamp}{real-world date}
   \command{unit}{the type whose only value is {\texttt unit}}
-  \sectiontitle{Instructions}\begin{raggedright}\noindent\input{instructions}\end{raggedright}
+  \sectiontitle{Instructions}\begin{flushright}\noindent\input{instructions}\end{flushright}
 \end{multicols}
 \include{instructions-detail}
 
